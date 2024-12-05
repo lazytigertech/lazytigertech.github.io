@@ -1,0 +1,9 @@
+#code1,#code2,#code3,#code4{
+    font-size: 20px;
+}
+
+.aspect-ratio-image {
+    height: 400px; /* La imagen ajusta su altura al 100% del contenedor */
+    width: auto;  /* El ancho se ajusta automáticamente para mantener la proporción */
+    object-fit: contain; /* Asegura que la imagen no se distorsione */
+}
