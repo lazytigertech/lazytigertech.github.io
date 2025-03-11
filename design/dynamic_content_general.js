@@ -1,14 +1,16 @@
-
-document.getElementById('nav-page-1').textContent="OHLC Charts";
-document.getElementById('nav-page-2').textContent="High Frequency";
-document.getElementById('nav-page-3').textContent="Heatmaps";
-/*document.getElementById('nav-page-4').textContent="Login";*/
+/*
+document.getElementById('nav-page-1').textContent="DeluxeFilms";
+document.getElementById('nav-page-3').textContent="Portafolio";
+document.getElementById('nav-page-4').textContent="Login";
+.logo-link p{display:none}
+.subscription-modal-body{width:auto}.leftfooter p{display:none}
+*/
 
 const dynamic_dropdown=`<div>
-                                <a href="./heatmaps.html" id="menu-page-1" class="ai-generators">Heatmaps</a>
-                                <a href="./candlecharts.html" id="menu-page-2" class="ai-generators">OHLC Charts</a>
+                                <a href="./index.html" id="menu-page-1" class="ai-generators">DeluxeFilms</a>
+                                <a href="./index.html#portafolio-video" id="menu-page-2" class="ai-generators">Portafolio</a>
                                 <!--<a href="./highfrequency.html" id="menu-page-3" class="ai-generators">HFT Servers</a>-->
-                                <a href="./api.html" id="menu-page-4" class="apidocs">APIs</a>
+                                <!--<a href="./api.html" id="menu-page-4" class="apidocs">Servicios</a>-->
                             </div>`;
 
 const dropdown_pages = document.getElementById('dropdown-pages');
