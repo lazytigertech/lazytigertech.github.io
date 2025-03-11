@@ -6,6 +6,8 @@ document.getElementById('nav-page-4').textContent="Login";
 .subscription-modal-body{width:auto}.leftfooter p{display:none}
 */
 
+document.getElementById("login-button-dropdown").style.display = "none";
+
 const dynamic_dropdown=`<div>
                                 <a href="./index.html" id="menu-page-1" class="ai-generators">DeluxeFilms</a>
                                 <a href="./index.html#portafolio-video" id="menu-page-2" class="ai-generators">Portafolio</a>
