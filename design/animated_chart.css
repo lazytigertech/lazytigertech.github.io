@@ -5,10 +5,6 @@ body{
     background:#3f2042;
     margin:0;
     font-family:Montserrat,sans-serif
-}body::-webkit-scrollbar{
-    display:none
-}body{
-    -ms-overflow-style:none
 }:root{
     color-scheme:dark
 }
@@ -82,3 +78,21 @@ body {
 
 
 @keyframes pulsing-glow-7bf311b9{0%{box-shadow:0 0 50px 0 rgba(255,237,230,.231372549);transform:translateY(2px)}50%{transform:translateY(-2px);box-shadow:0 0 80px 15px rgba(255,237,230,.231372549)}to{box-shadow:0 0 50px 0 rgba(255,237,230,.231372549);transform:translateY(2px)}}.home__section[data-v-0237a791]{padding:60px 0}.home__header[data-v-0237a791]{background:url(../img/background1.74679106.svg) no-repeat 50%;background-size:cover;margin-top:-56px;padding-top:56px;position:relative;overflow:hidden}.home__header .mdc-layout-grid[data-v-0237a791]{position:relative;z-index:1}
+
+@media (max-width: 600px) {
+    #example-chart-1,#example-chart-2,#chart3{
+        border-radius: 15px!important;
+    }
+  }
+
+@media (max-width: 500px) {
+    #example-chart-1,#example-chart-2,#chart3{
+        border-radius: 10px!important;
+    }
+  }
+
+@media (max-width: 400px) {
+    #example-chart-1,#example-chart-2,#chart3{
+        border-radius: 5px!important;
+    }
+  }
