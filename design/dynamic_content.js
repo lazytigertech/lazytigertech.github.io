@@ -57,7 +57,7 @@ curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </spa
                       
                       <section id="Python" class="code api-key-auto-substitute-area">
     <div class="inner-content">
-        <span class="quick-start-header"><code><p id="code3"> Python Example</p></code></span>
+        <span class="quick-start-header"><code><p id="code3"> CEX chart</p></code></span>
         <div class="highlight"><pre><span></span><span class="c1"># Example using Python to interact with the API:</span>
 
 <span class="nv">import</span><span class="w"> </span>requests
@@ -71,6 +71,43 @@ data<span class="w"> </span><span class="o">=</span><span class="w"> </span><spa
 <span class="w">    </span><span class="s1">"currency"</span><span class="o">:</span><span class="w"> </span><span class="s1">"BTC"</span><span class="o">,</span>
 <span class="w">    </span><span class="s1">"currency_reference"</span><span class="o">:</span><span class="w"> </span><span class="s1">"USDT"</span><span class="o">,</span>
 <span class="w">    </span><span class="s1">"interval"</span><span class="o">:</span><span class="w"> </span><span class="s1">"1m"</span>
+<span class="o">}</span>
+
+<span class="nv">try</span><span class="w">:</span>
+    <span>response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>requests.post<span class="o">(</span><span>url</span><span class="o">,</span> <span class="nv">json</span><span class="o">=</span><span>data</span><span class="o">,</span> <span class="nv">timeout</span><span class="o">=</span><span class="m">50</span><span class="w">)</span>
+    
+    <span class="k">if</span> <span>response</span><span class="w">.</span><span>status_code</span><span class="o"> </span><span class="o">==</span><span class="w"> </span><span class="m">200</span><span class="w">:</span>
+        <span>image_base64</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>response.json<span class="o">().get</span><span class="o">(</span><span class="s1">"base64img"</span><span class="o">)</span>
+        <span>image_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>base64.b64decode<span class="o">(</span><span>image_base64</span><span class="o">)</span>
+        <span>output_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>os.path.join<span class="o">(</span>os.getcwd<span class="o">(),</span> <span class="s1">"base64image.png"</span><span class="o">)</span>
+        <span class="k">with</span> <span class="k">open</span><span class="o">(</span><span>output_path</span><span class="o">,</span> <span class="s1">"wb"</span><span class="o">)</span> <span class="k">as</span> <span>file</span><span class="w">:</span>
+            <span>file</span><span class="w">.</span><span>write</span><span class="o">(</span><span>image_data</span><span class="o">)</span>
+        print<span class="o">(</span><span class="s1">"Image saved"</span><span class="o">)</span>
+    <span class="k">else</span><span class="w">:</span>
+        print<span class="o">(</span><span class="s1">"Error in request"</span><span class="o">)</span>
+<span class="k">except</span> <span class="nv">Exception</span> <span class="k">as</span> <span class="nv">e</span><span class="w">:</span>
+    print<span class="o">(</span><span class="s1">"Error"</span><span class="o">)</span>
+</pre></div>
+    </div>
+</section>
+
+
+
+<section id="Python" class="code api-key-auto-substitute-area">
+    <div class="inner-content">
+        <span class="quick-start-header"><code><p id="code3"> DEX chart</p></code></span>
+        <div class="highlight"><pre><span></span><span class="c1"># Example using Python to interact with the API:</span>
+
+<span class="nv">import</span><span class="w"> </span>requests
+<span class="nv">import</span><span class="w"> </span>base64
+<span class="nv">import</span><span class="w"> </span>os
+
+
+url<span class="w"> </span><span class="o">=</span><span class="w"> </span><span>"https://api.roardefi.com/dex"</span>
+
+data<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="s1">"network_symbol"</span><span class="o">:</span><span class="w"> </span><span class="s1">"WLD"</span><span class="o">,</span>
+<span class="w">    </span><span class="s1">"token_symbol"</span><span class="o">:</span><span class="w"> </span><span class="s1">"WETH"</span>
 <span class="o">}</span>
 
 <span class="nv">try</span><span class="w">:</span>
