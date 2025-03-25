@@ -72,7 +72,7 @@ let interval;
 
 
         function sendrequest(datainput){
-
+	    const timestamp_download = Date.now();
             const dataform = JSON.stringify(datainput);
                 
             const xhr = new XMLHttpRequest();
@@ -80,7 +80,7 @@ let interval;
             
 
             // Configura la solicitud
-            xhr.open('POST', 'https://api.roardefi.com/dex/', true);
+            xhr.open('POST', `https://api.roardefi.com/dex?ts=${timestamp_get}`, true);
 
             // Establece el timeout en milisegundos (ejemplo: 5000 ms = 5 segundos)
             xhr.timeout = 120000; // Puedes cambiarlo a cualquier valor, como 120000 para 2 minutos
