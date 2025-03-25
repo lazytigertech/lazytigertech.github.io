@@ -12,59 +12,7 @@ let interval;
       console.log("coming soon...");
     }
 
-    function start_0() {
-
-      const margin_array={0:"1",1:"5",2:"10",3:"15",4:"20"};
-
-      const value1 = document.getElementById('dynamic-input').value || '';
-      const variable2 = document.getElementById('menu1').value;
-      const variable3 = document.getElementById('menu2').value;
-      const variable4 = document.getElementById('menu3').value;
-      const variable5 = document.getElementById('menu4').value;
-      const variable6 = document.getElementById('menu5').value;
-      const variable7 = document.getElementById('menu6').value;
-      const variable8_0 = document.getElementById('menu7').selectedIndex;
-      const variable8 = margin_array[variable8_0];
-      //const variable5 = document.getElementById('checkbox').checked ? 1 : 0;
-      console.log("variable8: ",variable8);
-
-      const json = {
-        "currency":value1,
-        "currency_reference":variable2,
-        "interval":variable3,
-        "platform":variable4,
-        "heatmap":variable5,
-        "trade_option":variable6,
-        "metric_view":variable7,
-        "axis_margin":variable8
-      };
-
-      console.log(json);
-      //sendrequest(json);
-
-      const button = document.getElementById('start-button');
-      const overlay = document.getElementById('loading-overlay');
-      const percentageText = document.getElementById('loading-percentage');
-
-      // Deshabilitar el botón y mostrar overlay
-      button.disabled = true;
-      overlay.style.display = 'flex';
-
-      // Incrementar porcentaje
-      interval_active=1;
-      clearInterval(interval);
-
-      percentage = 0;
-      interval = setInterval(() => {
-        if (percentage < 99 && interval_active==1) {
-          percentage++;
-          percentageText.textContent = `${percentage}%`;
-        } else {
-          clearInterval(interval);
-          //finish();
-        }
-      }, 80); // 10 segundos (100ms * 100 pasos)
-    }
+    
 
     function finish() {
         interval_active=0;
