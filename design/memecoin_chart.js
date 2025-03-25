@@ -72,7 +72,7 @@ let interval;
 
 
         function sendrequest(datainput){
-	    const timestamp_download = Date.now();
+	    const timestamp_get = Date.now();
             const dataform = JSON.stringify(datainput);
                 
             const xhr = new XMLHttpRequest();
