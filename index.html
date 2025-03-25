@@ -1,40 +1,1058 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>En Mantenimiento</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            text-align: center;
+<html><head>
+
+
+    <title>roardefi</title>
+
+       
+
+
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="shortcut icon" href="./design/images/favicon.ico" type="image/x-icon">
+       <link rel="icon" href="./design/images/favicon.ico" type="image/x-icon">
+
+       <link rel="stylesheet" href="./design/animated_chart.css"> 
+       <link rel="stylesheet" href="./design/faq_style.css"> 
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+       
+ 
+     <meta name="description" content="Artificially intelligent tools for naturally creative humans.">
+   
+   <meta property="og:site_name" content="roardefi">
+   <meta property="og:type" content="article">
+   <meta property="og:title" content="roardefi">
+   <meta property="og:description" content="Artificially intelligent tools for naturally creative humans.">
+   <meta property="og:image" content="">
+
+
+       
+        <style type="text/css">
+        
+        html{background-color:#170a2c;font-family:'Arial'}button,input,optgroup,select,textarea{font-family:'Arial';font-size:100%;line-height:1.15;margin:0}body{margin:0;padding:0;display:flex;flex-direction:column;min-height:100vh;background:linear-gradient(180deg,#7729aa -13.13%,#170a2d 0.17%,#0a061d 6.9%,rgba(10,6,30,0.99) 36.38%,#010311 98.59%)!important}a{text-decoration:none}header{height:78px;overflow:hidden;width:100%;z-index:10}header a.logo-link,footer a.logo-link{display:flex;color:white!important;cursor:pointer;margin-right:10px}header nav{display:flex;margin-left:auto;max-height:62px;background:var(--clear);border:1px solid transparent;border-radius:12px}header nav:hover{background:rgba(255,255,255,0.12)}header ul{list-style-type:none;margin:0;padding:0;display:flex;flex-direction:row;white-space:nowrap;align-items:center;min-width:46px;justify-content:center}header ul li{display:block;float:left;font-size:16px;color:#fff;line-height:25px}header ul li a{text-decoration:none;cursor:pointer}.drop-menu-button{display:block;width:46px;height:45px;padding:0;margin:0;border:none;background:transparent;cursor:pointer}.menu-icon{font-size:30px;font-weight:bold;cursor:pointer;vertical-align:middle;pointer-events:none}header ul li a:hover{text-decoration:none}header ul li.dropdown:hover{cursor:pointer}header .dropdown{position:unset}ul li.dropdown ul{visibility:hidden;opacity:0;display:none;position:absolute;transition:all 0.5s ease;top:auto;z-index:10;right:13px;margin:auto;margin-top:20px;width:296px;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:rgba(142,142,142,0.02);-webkit-backdrop-filter:blur(114px);-moz-backdrop-filter:blur(114px);backdrop-filter:blur(114px)}.show-dropdown{visibility:visible!important;opacity:1!important;display:block!important}ul li.dropdown ul a{clear:both;display:block;margin:0;margin:0px 10px;height:45px;position:relative}ul li.dropdown ul li{margin:4px 5px;cursor:pointer}.search-bar-container{background:#212121;border-radius:30px;margin:0 9px 0 9px;height:32px;width:100%;max-width:450px;border:1px solid #ffffffa6;display:flex;flex-direction:row;align-items:center;box-shadow:inset 0px 2px 4px rgb(32 33 36 / 27%)}.search-bar-container img{height:17px;margin:8px}.search-bar{width:100%}.search-bar input{width:100%;height:100%;border:none;padding:0;color:white;background-color:rgba(0,0,0,0)}.loading{background:url(/static/images/loading.gif) no-repeat right center!important;background-size:contain!important}.loading-center{background:url(/static/images/loading.gif) no-repeat center center;background-size:contain;height:50px}a.button{display:flex;padding:6px 19px;font-size:14px;border-radius:45px;border:1px solid #1e79d1;vertical-align:bottom;white-space:nowrap;font-weight:bold;color:#1e79d1;margin-left:9px}a.button:active{opacity:0.9}a.button.highlighted{background-color:#a01ed1;color:white;width:auto;background:linear-gradient(94deg,#c764ec,#4a36b1);height:auto;border:none;cursor:pointer}a.button.hotline{background:transparent;color:#c764ec;width:auto;height:auto;border:1px solid #c764ec;cursor:pointer}a.login-button{border:none;color:white;cursor:pointer}input:focus,button{outline:none}footer{margin-top:auto;text-align:center}a.button.fitter{width:fit-content}a.button.doublecolor{border-radius:8px;border-right:1px solid #e7416b;border-bottom:1px solid #e7416b;border-left:1px solid #1e79d1;border-top:1px solid #1e79d1;background:transparent;padding:0.3em;color:white;width:auto;height:auto}#social-modal{flex-direction:column;width:80vw;max-width:440px;justify-content:flex-start;align-items:center;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:rgba(142,142,142,0.02);-webkit-backdrop-filter:blur(114px);-moz-backdrop-filter:blur(114px);backdrop-filter:blur(114px);margin:auto;position:relative;color:white;padding-bottom:54px;position:fixed}.social-link-copy{display:flex;box-sizing:border-box;position:relative;align-items:center;justify-content:space-between;padding-right:18px;padding-left:18px;width:100%;border-radius:32px;border:1px solid rgba(255,255,255,0.13);backdrop-filter:blur(12px);height:48px;margin-top:10px}#social-link-input{flex-grow:1;border:none;background-color:transparent;font-size:14px;padding:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:white}.copy-button{background-color:transparent;border:none;cursor:pointer;padding:4px;margin-left:8px}.copy-button img{width:20px;height:20px}footer p{color:white;font-size:15px}.footer-row{display:flex;position:relative;flex-direction:row;align-items:center;justify-content:space-between;height:50px;background-color:#010009;z-index:5;bottom:0px}
+        
+        .good-auth-error{display:none;justify-content:center;font-size:11px;color:#59ee7f;text-align:left;margin-bottom:8px}.leftfooter{margin-left:16px}.leftfooter a{display:flex;flex-direction:row}.leftfooter p,.logo-link p{font-weight:bold;background:linear-gradient(180deg,#fff 0%,#ebe5fb 50%,#dbdbdb 100%);-webkit-background-clip:text;background-clip:text;color:transparent;display:flex;flex-direction:row;font-size:19px;margin:auto;margin-left:10px}@media screen and (max-width:800px){.logo-link p{display:none}}.rightfooter{display:flex;flex-direction:row;margin-right:16px}.contact,.press,.legal,.xlogo,.linkedinlogo,#pmLink{height:20px;margin:auto;margin-left:24px;color:white}.xlogo,.linkedinlogo{margin-top:6px}.footer-container{position:relative;overflow:hidden;bottom:0px;min-height:450px}.castle{position:relative;width:100vw;height:auto;z-index:1}.smaller-castle{display:none;width:100vw;height:auto}.centered-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:3}.centered-text{margin-top:-25px;font-size:30px}a.centered-button{background:white;border:none;color:#101010;white-space:nowrap;letter-spacing:2%;width:33vw;margin:auto;padding:10px 135px!important}a.centered-button:hover{background:var(--purple);transition:background 0.4s ease-in-out;color:white}dialog{padding:0;border:0;border-radius:0.6rem}dialog::backdrop{background-color:rgba(0,0,0,0.4)}dialog + .backdrop{position:fixed;top:0;right:0;bottom:0;left:0;background-color:rgba(0,0,0,0.4)}dialog[open]{animation:slide-up 0.4s ease-out;display:flex}dialog{display:none;left:0;right:0;margin:auto;max-width:90vw;background-color:transparent}dialog#signup-modal form,dialog#login-modal form{display:block;margin:20px;width:500px}dialog#subscription-modal form{display:block;margin:20px;width:600px}dialog .button.social-auth{width:48%;background:#fff;color:#1D2129;border:1px solid #999;display:inline-block;padding:0 0 0 28px;text-align:left;margin:10px 4px}dialog .button.social-auth img{vertical-align:middle;margin:6px}
+            
+        .bad-auth-error{display:none;justify-content:center;font-size:11px;color:#eb4f4f;text-align:left;margin-bottom:8px;margin-left:8px}
+        
+        dialog .button.more-options{background:linear-gradient(94deg,#c764ec,#4a36b1)}dialog .other-options-signup-row{display:flex;flex-direction:row;justify-content:center;align-items:center;margin:20px}dialog .other-options-signup-line{width:30%;height:0;border:1px solid #fff;margin:3px;display:inline-block}dialog .other-options-signup{color:#fff;font-size:15px;padding:0 10px 0 10px}dialog .switch-login-signup-button{padding:0 28px;color:#fff;background:#6ec0fd;font-weight:700;font-size:.7em;border-radius:3px;box-shadow:0 2px 5px 0 rgba(0,0,0,.26);border-width:0;border-style:none;height:25px;cursor:pointer;margin:10px auto;width:30%;display:block}.login-container{display:none;flex-direction:column;width:440px;justify-content:flex-start;align-items:center;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:rgba(142,142,142,0.02);backdrop-filter:blur(114px);-webkit-backdrop-filter:blur(114px);-moz-backdrop-filter:blur(114px);-ms-backdrop-filter:blur(114px);margin:auto;color:white;position:fixed}.close{position:absolute;top:0.2em;right:0.2em;padding:0.3em;line-height:0.6;background-color:transparent;border:0;font-size:2em;color:#fff;cursor:pointer}.modal-header,.modal-body,.modal-footer{padding:1em;background-color:#2A282F;text-align:center;color:white}.login-header{text-align:center;font-size:36px;font-weight:600;letter-spacing:0.75px;line-height:normal;margin-top:49px;margin-bottom:0px;cursor:default;padding:0px}.share-header{text-align:center;font-size:36px;font-weight:600;letter-spacing:0.75px;line-height:normal;margin-top:54px;margin-bottom:0px}.share-subheader{text-align:center;color:darkgray;font-size:12px;line-height:18px;margin:auto;margin-top:8px;margin-bottom:24px}.out-credits-header{text-align:center;font-size:36px;font-weight:600;letter-spacing:0.75px;line-height:normal;margin-top:38px;margin-bottom:0px}.login-exit{display:flex;flex-direction:row;position:absolute;justify-content:right;right:24px;top:24px;cursor:pointer}.out-credits-exit{display:flex;flex-direction:row;position:absolute;justify-content:right;right:24px;top:24px;cursor:pointer}.please-subheader{text-align:center;color:darkgray;font-size:12px;line-height:18px;margin:auto;margin-top:8px;margin-bottom:16px}.options-container{width:270px;height:48px;display:flex;justify-content:center;align-items:center;background:rgba(142,142,142,0.05);border-radius:12px;justify-content:center;margin:auto;margin-top:12px;margin-bottom:12px;cursor:pointer}.membership-toggle{width:100%;height:36px}.login-active{display:flex;width:131px;height:40px;margin-left:4px;font-size:14px;font-weight:200;padding:0 41px 0 41px;justify-content:center;align-items:center;border-radius:10px;color:darkgray;cursor:pointer}.member-active{display:flex;width:131px;height:28px;margin-left:4px;font-size:12px;font-weight:200;padding:0 40px 0 40px;justify-content:center;align-items:center;border-radius:10px;color:darkgray;cursor:pointer}.signup{display:flex;width:131px;height:40px;padding:0 41px 0 41px;justify-content:center;align-items:center;border-radius:10px;font-size:14px;font-weight:200;color:darkgray;white-space:nowrap;text-align:center;cursor:pointer;margin-right:4px}.active{color:white;font-weight:400;background:rgba(255,255,255,0.1)}.signin-with-google{display:flex;position:relative;height:48px;width:270px;justify-content:center;align-items:center;gap:12px;border:none;border-radius:12px;color:white;font-size:14px;font-weight:400;font-family:inherit;background:rgba(255,255,255,0.1);margin:auto;margin-bottom:12px;transition:background 0s ease;cursor:pointer}.signin-with-google:hover{background:white;color:black}.signin-with-github{display:flex;position:relative;height:48px;width:270px;justify-content:center;align-items:center;gap:12px;border:none;border-radius:12px;color:white;font-size:14px;font-weight:400;font-family:inherit;background:rgba(255,255,255,0.1);margin:auto;margin-bottom:12px;transition:background 0s ease;cursor:pointer}.signin-with-github:hover{background:#121212;color:white}.button.login-with-email{display:flex;justify-content:center;background:none;border:none;white-space:nowrap;color:white;font-family:inherit;font-size:12px;font-weight:400;margin:auto;margin-bottom:48px;cursor:pointer}.email-container::before{content:"Email Address";position:absolute;z-index:1;top:10px;left:60px;font-size:9px;pointer-events:none;color:darkgray}.email-container{position:relative;display:none;margin:auto;margin-bottom:12px;width:270px;height:48px;border-radius:12px;background:rgba(142,142,142,0.02)}.email-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:darkgray;z-index:1;border-right:1px solid darkgray;padding-right:12px}.input-email{padding-left:58px;padding-top:22px;padding-bottom:10px;height:auto;line-height:14px;position:relative;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:transparent;color:white;width:100%}.input-email::placeholder{font-size:12px;line-height:14px}.password-container::before{content:"Enter Password";position:absolute;z-index:1;top:10px;left:60px;font-size:9px;pointer-events:none;color:darkgray}.password-container{position:relative;display:none;margin:auto;margin-bottom:12px;width:270px;height:48px}.lock-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:darkgray;z-index:1;border-right:1px solid darkgray;padding-right:10px}.input-password{font-size:12px;padding-left:58px;padding-top:22px;padding-bottom:10px;height:auto;line-height:14px;position:relative;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:transparent;color:white;width:100%}.input-password::placeholder{font-size:12px;line-height:18px}.reenter-password-container::before{content:"Re-enter Password";position:absolute;z-index:1;top:10px;left:60px;font-size:9px;color:darkgray;pointer-events:none}.reenter-password-container{position:relative;display:none;margin:auto;margin-bottom:12px;width:270px;height:48px}.button.login-email{display:none;flex-direction:column;background:#7000ff;border:none;width:270px;color:var(--white);font-size:14px;font-weight:500;white-space:nowrap;letter-spacing:2%;margin:auto;padding:12px;margin:auto;margin-bottom:50px;transition:background 0.2s ease;cursor:pointer;align-items:center;border-radius:12px}.button.sub-set{display:flex;flex-direction:column;align-items:center;border-radius:12px;background:#7000ff;border:none;width:270px;color:var(--white);font-size:14px;font-weight:500;white-space:nowrap;letter-spacing:2%;margin:auto;padding:12px;margin:auto;margin-bottom:12px;transition:background 0.2s ease;cursor:pointer}.button.goback{display:none;justify-content:center;background:none;border:none;white-space:nowrap;color:white;font-size:12px;font-weight:400;margin:auto;margin-bottom:24px;cursor:pointer}#forgot-password{display:none;justify-content:center;text-align:center;font-size:12px;margin:auto;margin-bottom:12px;color:white}#forgot-password:hover{background:none;cursor:default}span.click-here{color:#c549fe;cursor:pointer;margin-left:6px}.modal-body .title{font-family:'Arial';font-size:30px;justify-content:center}.modal-body .subtitle{opacity:0.9}.modal-header{margin:0;padding-bottom:0.6em;background-color:#f3f3f3;border-bottom:1px solid #f3f3f3}.modal-footer{border-top:1px solid #f3f3f3}
+            
+        .roardefiProSubscriptionRow{display:flex;flex-direction:column;align-items:center;justify-content:space-evenly}.roardefiProSignupRow{display:flex;align-items:center;justify-content:space-evenly}.roardefiProPaymentRow{display:flex;align-items:center;justify-content:space-evenly;flex-direction:column}.subscription-modal-body{width:max(40vw,386px);background-color:#2A282F}.out-of-credits-modal-body{display:flex;flex-direction:column;width:80vw;max-width:440px;justify-content:flex-start;align-items:center;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:rgba(142,142,142,0.02);backdrop-filter:blur(114px);margin:auto;position:relative;color:white;padding-bottom:32px}.subscription-pro{display:flex;flex-direction:column}.payasyougo{display:none;flex-direction:column}.modal-row{display:flex;flex-direction:row;justify-content:flex-start;padding-left:50px;align-items:center}.modal-row-top{display:flex;flex-direction:row;justify-content:flex-start;padding-left:40px;align-items:center}.sub-title{color:#fff;text-align:center;font-size:38px;padding:0 0 0 20px}.sub-info{padding:0.5em;color:#fff;text-align:left;font-size:14px}.purple{color:#c764ec}.smaller{text-align:left;font-size:12px;padding-right:70px}.stripe-signup-button{padding:8px 30px;font-size:16px;border-radius:45px;background-color:#a01ed1;color:white;width:auto;background:linear-gradient(94deg,#c764ec,#4a36b1);height:auto;border:none;cursor:pointer;vertical-align:bottom;white-space:nowrap;font-weight:bold;margin-bottom:11px}.switch-pay-button{font-size:16px;color:#9D9D9D;padding:10px;background:transparent;text-decoration:underline;width:auto;height:auto;border:none;cursor:pointer}.modal-pricing-title{padding-right:0px}.modal-pricing{margin:0px;font-size:14px;margin-bottom:4px;text-align:left}.modal-pricing-subheader{margin-bottom:100px}.modal-subscriptions-container{display:flex;position:relative;flex-direction:column;text-align:left;height:750px;border:1px solid transparent;border-radius:12px;padding:44px;padding-bottom:10px;color:#fff;overflow-y:hidden}.modal-small-subscription-container{background:rgba(142,142,142,0.02);backdrop-filter:blur(114px);-webkit-backdrop-filter:blur(114px);height:fit-content;width:426px;border:1px solid rgba(255,255,255,0.13);border-radius:12px;margin:auto}.modal-subscription-section{display:flex;flex-direction:row;justify-content:space-between;height:auto;overflow:hidden}.modal-pro-subscription-section{visibility:hidden}.modal-overview{visibility:visible}.modal-subscription-title-container{display:flex}.modal-subscription-title{font-size:24px;margin-bottom:10px;line-height:29px}.modal-subscriptions-subheader{font-size:14px;color:#9c9b9b;margin-bottom:16px;font-weight:300}.pro-title{margin-left:3px;color:#8f37ff;font-weight:600}.modal-subscription-price{display:flex}.modal-price{font-size:40px;color:#8f37ff;font-weight:500;margin-bottom:16px}.modal-subscription-length{font-size:14px;color:#9c9b9b;margin-left:6px;margin-top:26px}.modal-best-value{display:flex;position:absolute;top:18px;width:78px;height:24px;right:0;justify-content:center;align-items:center;font-size:60%;letter-spacing:2px;font-weight:500;padding:0px 10px 0 10px;border-bottom-left-radius:6px;border-top-left-radius:6px;background-color:#8f37ff;white-space:nowrap}.modal-get-started{display:flex;flex-direction:row;width:100%!important;height:48px;padding:5px 95px;justify-content:center;align-items:center;gap:10px;border-radius:12px;font-size:18px;text-align:center;background-color:#8f37ff;color:white;border:none;white-space:nowrap;cursor:pointer}.modal-value{margin:0px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;height:48px;border-bottom:1px rgba(255,255,255,0) solid}.modal-overview-title{display:flex;margin-block-start:0px;margin-block-end:0px;justify-content:flex-start;align-items:center;height:48px;width:223%;border-bottom:1px rgba(255,255,255,0.12) solid}.modal-overview{list-style-type:none;font-size:14px;line-height:38px;padding-left:0px}.modal-membership{color:#8d8d8d;font-size:12px;margin:0px;height:24px;margin-bottom:0px;align-items:flex-start;border:none}.modal-membership-description{margin-bottom:0px;text-align:center;display:flex;flex-direction:column;align-items:center}.modal-value2{margin-top:-21px;border-bottom:1px rgba(255,255,255) solid}.modal-api-value{border-bottom:none}.get-started-container{display:none;flex-direction:column}.go-back-subscription{backdrop-filter:blur(10px);width:100%!important;height:46px;background:var(--clear);border:1px solid transparent;border-radius:12px;color:var(--white);white-space:nowrap;cursor:pointer;transition:none;padding:5px 65px;margin:auto;font-size:18px}.subscription-terms{margin-bottom:12px;list-style:none;line-height:24px}.payment-container{display:flex;flex-direction:column}.payment-options{width:100%}.stripe-pay-active{display:flex;width:100%;height:40px;margin-left:4px;font-size:14px;font-weight:200;padding:0 41px 0 41px;justify-content:center;align-items:center;border-radius:10px;color:darkgray;cursor:pointer}.paypal-pay{display:flex;width:100%;height:40px;padding:0 41px 0 41px;justify-content:center;align-items:center;border-radius:10px;font-size:14px;font-weight:200;color:darkgray;white-space:nowrap;text-align:center;cursor:pointer;margin-right:4px}.active{color:white;font-weight:400;background:rgba(255,255,255,0.1)}.modal-see-full{display:flex;flex-direction:row;justify-content:center;align-items:center;background:none;border:none;color:white;font-size:12px;cursor:pointer;margin:auto;margin-top:12px;gap:4px}.subscribe-to{margin-bottom:12px}.paypal-cred{display:none}.paypal-styling{border-radius:12px;background:white;overflow:hidden;width:100%;height:48px}.backup-paypal-button{display:none!important}.paypal-sub{display:none}.share-button{color:#fff!important;opacity:0.65;cursor:pointer;display:flex;align-items:center;flex-direction:row}.share-button img{margin-right:4px}#social-image{margin:0 auto}.separator-bullet{margin:0 4px;color:#999}.card-list{display:flex;flex-direction:column;justify-content:center;padding:18px 10px 0}.card-list .main-list{display:flex;flex-direction:column;margin:0 auto;width:100%}.card-list-item{border-radius:8px;margin:30px auto 30px auto;width:100%;max-width:700px;cursor:pointer;display:flex;flex-direction:row;outline:none;box-shadow:0 8px 92px 20px rgb(71 28 115 / 70%)}.card-list-item .heart-link{display:flex;flex:0 1;flex-direction:column;padding:12px 0;align-items:center}.card-list-item .card-content{display:flex;flex-direction:column;background:transparent;width:100%;border-radius:0 8px 8px 0;color:black;padding:20px}.card-list-item:hover{outline:1px solid #898989}.card-list-item .tag-container{display:flex;flex-direction:row}.card-list-item .card-list-item-header{display:flex;flex-direction:row;align-items:center;margin:12px;font-size:14px;color:#999}.card-list-item .trunc-summary{margin:0 12px 12px;font-size:14px;color:#fff}.card-list-item .card-footer{display:flex;flex-direction:row;align-items:center;margin:12px;font-size:14px}.card-list-item .card-footer .author-link{color:#c764ec}.card-list-item .title{margin:0 12px 0 12px;font-size:39px;font-weight:bold;line-height:24px;color:#fff}.dropdown-select{background-color:rgba(111,0,255,0.049);color:darkgray;padding:12px;font-size:16px;border:none;cursor:pointer;-webkit-appearance:none;-moz-appearance:none;appearance:none}.dropdown-select option{color:white;margin-top:14px}.dropdown-select option:first-child{color:darkgray}.dropdown-select option:hover{background-color:#f1f1f1}.dropdown-payment-amount::before{content:"Add credits to your account";position:absolute;z-index:1;top:10px;left:60px;font-size:8px;color:darkgray;pointer-events:none}.dropdown-payment-amount::after{color:white}.dropdown-payment-amount{position:relative;display:none;margin-bottom:12px;width:100%;height:48px}.go-dropdown{display:flex}.money-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:darkgray;z-index:1;border-right:1px solid darkgray;padding-right:12px}.dropdown-input-amount{font-size:12px;padding-left:58px;padding-top:22px;padding-bottom:10px;height:48px;line-height:14px;position:relative;width:100%;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.02);backdrop-filter:blur(12px)}.dropdown-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none;background-color:#ffffff00;color:white;border:none;z-index:2}.dropdown-icon:hover{cursor:pointer}.sub-terms-pro-styling{padding-left:0px;margin:32px auto 38px auto;flex-direction:column}.sub-terms-go-styling{padding-left:0px;margin:32px auto 36px auto;flex-direction:column}.dataset{position:relative;width:100%}.payment-dropdown{margin-bottom:200px;margin:auto}.card-list-item .title a{color:#fff}.title-image-pro{display:flex;flex-direction:row;justify-content:center;align-items:center}.logo-imagepro{width:15%;height:10%}.check-imagepro{width:10%}.thumbnail{width:500px;max-width:100%;margin:12px auto;height:350px;max-height:100%;box-sizing:border-box;border-radius:8px;background-size:contain;background-repeat:no-repeat;background-position:center}.middle{vertical-align:middle}.float-left{float:left}.float-right{float:right}.hide{display:none}.heart-link{display:flex;align-items:center;justify-content:center;color:#999!important;text-decoration:none!important;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.heart-count{margin:4px}.heart-link:not([hearted]) .hearted-heart-icon{display:none}.heart-link[hearted] .unhearted-heart-icon{display:none}.show-lt-md{display:none!important}.show-lt-sm{display:none!important}.hide-lt-xlg{display:none!important}.hide-lg{display:none!important}a:hover,a:focus{text-decoration:none}.social-icon{display:flex;gap:26px}.social-name{font-size:14px}.icon-container{display:flex;flex-direction:column;align-items:center;gap:8px}.icon-container a{display:flex;width:58px;height:58px;border-radius:12px;background-color:#ffffff04;justify-content:center;align-items:center;transition:background-color 0.3s;margin-bottom:-8px}.icon-container a:hover{background-color:#ffffff12}.facebook a:hover{background-color:#1876f2}.reddit a:hover{background-color:#ff4400}.x a:hover{background-color:rgb(13,13,13)}.linkedin a:hover{background-color:#0a66c2}.icon-container img{width:55%;height:auto;transition:transform 0.3s}.icon-container a:hover img{transform:scale(1.1)}@media screen and (max-width:960px){header img.header-social-icon{margin-left:12px}.hide-lt-xlg{display:none!important}.hide-lt-lg{display:none!important}.hide-md{display:none!important}}@media screen and (max-width:800px){.modal-row{padding-left:2px}.sub-title{font-size:30px}.smaller{padding-right:30px}}@media screen and (max-width:600px){ul li.dropdown ul{right:2%}.contact,.press,.legal,.xlogo,.linkedinlogo{margin-left:14px;font-size:12px;height:17px}.modal-row-top{padding-left:15px}.smaller{padding-right:10px}dialog#signup-modal{width:365px}dialog#signup-modal form{width:90%;margin:auto}dialog#login-modal form{width:100%;margin:auto}dialog#subscription-modal form{width:400px;margin:10px}.thumbnail{max-width:90%;margin:12px}dialog .button{width:80%}dialog input[type=email]{width:90%}dialog input[type=text]{width:90%}dialog input[type=password]{width:90%}dialog .button.social-auth{width:80%;display:block;margin:auto;margin-bottom:10px;text-align:left}.card-list .card-list-item{margin:4px 0}.card-list .card-list-item .card-content{width:87%}header img.roardefi-logo{height:28px;margin-left:8px;width:32px;object-fit:cover;object-position:left}.show-lt-md{display:block!important}.hide-lt-xlg{display:none!important}.hide-lt-lg{display:none!important}.hide-lt-md{display:none!important}.hide-sm{display:none!important}.modal-get-started{margin-bottom:12px}.paypal-styling{margin-bottom:12px}.sub-terms-pro-styling{margin:15px auto 30px auto}.sub-terms-go-styling{margin:22px auto 32px auto}}@media (max-width:500px){.social-modal-body{width:268px}.social-icon{gap:12px}#social-modal{width:98%}.social-name{font-size:12px}}@media screen and (max-width:470px){.modal-small-subscription-container{width:96vw;height:auto}.modal-subscriptions-container{padding:24px 34px;height:auto}.modal-overview-title{width:243%}dialog{max-width:100vw;width:100vw}ul li.dropdown ul{width:96%}.login-container{width:96%}}@media screen and (max-width:440px){.modal-overview-title{width:233%}}@media screen and (max-width:420px){.modal-column{width:280px}.other-modal-column{width:280px;padding-bottom:5%;margin-bottom:10px}.other-modal-column .other-box-title{padding:0.8em}.modal-column .box-title{padding:0.8em}.other-modal-column :nth-child(2){padding:0.6em}.modal-row-top{padding-left:10px}.modal-column :nth-child(2){padding:0.6em}.roardefiProPaymentRow{display:flex;flex-direction:column}.modal-overview-title{width:213%}.member-active{padding:0 35px 0 35px}}@media screen and (max-width:390px){.modal-overview-title{width:193%}.member-active{padding:0 30px 0 30px}}@media screen and (max-width:375px){dialog#signup-modal form,dialog#login-modal form{width:90%;margin:auto}dialog input[type=email]{width:90%}dialog input[type=text]{width:90%}dialog input[type=password]{width:90%}dialog .button{width:90%}dialog .button.social-auth{width:90%}.title-image-pro{width:90%}.modal-row{width:90%}.modal-overview-title{width:183%}.member-active{padding:0 20px 0 20px}}@media screen and (max-width:425px){.subscription-modal-body{width:auto}.leftfooter p{display:none}.out-of-credits-modal-body{width:auto}.subscription-pro{width:100%;margin:auto}.modal-overview-title{width:163%}}@media screen and (max-width:320px){ul li.dropdown ul{right:10px}dialog#signup-modal form,dialog#login-modal form{width:95%;margin:auto}dialog#signup-modal{width:365px}dialog#subscription-modal form{width:400px;margin:10px}dialog .button{width:100%}dialog .button.social-auth{width:100%}.thumbnail{max-width:90%;margin:12px}.card-list .card-list-item .card-content{width:87%}.card-list .card-list-item{margin:4px 0}dialog .button.social-auth{width:100%;display:block}.options-container{width:260px}.signin-with-google{width:240px}.signin-with-github{width:240px}.email-container{width:240px}.password-container{width:240px}.reenter-password-container{width:240px}.button.login-email{width:240px}.show-lt-md{display:block!important}.hide-lt-xlg{display:none!important}.hide-lt-lg{display:none!important}.hide-lt-md{display:none!important}.hide-xs{display:none!important}}@media screen and (max-width:290px){.options-container{width:235px}.member-active{padding:0 12px 0 12px}dialog{margin-left:0px}}div.sticky{position:-webkit-sticky;position:sticky;top:0;z-index:10}div.left-sticky{position:fixed;top:20vh;left:0px;right:calc(100% - 320px);z-index:20;overflow:hidden}.fs-sidewall-container{z-index:9!important}#pmLink{visibility:hidden;text-decoration:none;cursor:pointer;background:transparent;border:none;font-size:16px;line-height:22px}#pmLink:hover{visibility:visible}@media (max-width:1650px){div.left-sticky{right:calc(100% - 180px)}}@media (min-width:1650px){div.left-sticky{right:calc(100% - 320px)}}@media screen and (max-width:600px){#pmLink{font-size:12px}}@media screen and (max-width:850px){#pmLink{position:absolute;bottom:53px;text-align:center;left:0px;width:85vw}}textarea:focus{outline:none;-webkit-tap-highlight-color:transparent}button:focus{outline:none;-webkit-tap-highlight-color:transparent}.hero-section{display:flex;height:min-content;position:relative;background:transparent;padding:0px;margin-bottom:30px}.hero{position:relative;display:flex;flex-direction:column;margin:auto;justify-content:center;align-items:center;margin-top:140px;margin-bottom:140px}.hero h1{font-size:106px;margin-bottom:12px;font-weight:100}h1,h3,p{color:white;margin:20px 0}.title{display:flex;flex-direction:row;text-align: center;margin:0 12px;}.titlesparkle{position:relative;top:-75px;left:100%;margin-left:-75px}.menuContainer{background-color:rgba(255,255,255,0.04);border-radius:12px;margin:10px}.topbuttons{display:flex;flex-direction:row;width:100%;border-radius:12px 12px 0px 0px}.button{display:flex;flex-direction:row;width:35px;justify-content:center;align-items:center;gap:10px;border-radius:12px;font-size:18px;text-align:center;font-style:normal}.button.login,.frontpagebutton{background:transparent;border:none;color:var(--white);font-weight:bold;letter-spacing:2%;transition:background 0.4s ease;cursor:pointer;height:38px;backdrop-filter:blur(10px);padding:10px 0;display:flex;flex-direction:row;justify-content:center;text-align:center;align-items:center}.frontpagebutton{display:flex;font-weight:300;flex-direction:row;justify-content:center;width:auto;margin-right:0px;padding-top:25px;padding-bottom:20px;cursor:pointer;backdrop-filter:blur(10px);border-radius:12px 12px 0px 0px;color:#7D7D7D;width:100%;cursor:pointer}.frontpagebutton:hover{background:rgba(255,255,255,0.2);color:white}.frontpagebutton.active{background:rgba(143,55,255,0.10);color:white;font-weight:400}#inputContainer{background:rgba(143,55,255,0.10);padding:12px;border-radius:0px 0px 12px 12px}#inputArea{width:100%;position:relative}textarea{position:relative;display:inline-flex;flex-direction:column;padding:12px;align-items:flex-start;justify-content:flex-start;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:linear-gradient(#0f0824,#0c071f) padding-box,linear-gradient(180deg,rgba(255,255,255,0.13) -0.61%,rgba(255,255,255,0.46) -0.43%,rgba(255,255,255,0.2) 13.63%,rgba(255,255,255,0.03) 100%) border-box;backdrop-filter:blur(10px);color:white;margin:auto;overflow:hidden;font-size:18px;word-wrap:break-word;max-width:426px;max-height:305px}#heroChatBox{padding:14px;border-radius:12px;margin:0;padding-bottom:4px;line-height:18px;display:flex;align-items:center;min-height:30px;height:30px;resize:none;transition:color 0.1s}.actionbuttons{display:flex;gap:10px;margin-top:12px}#description-title{font-size:18px;margin:0px 10px;letter-spacing: 0.05em;line-height: 1.5;text-align: center;width:400px}#inspireMeButton{border-radius:10px;border:1px solid rgba(255,255,255,0.13);width:200px;max-width:200px;padding:20px 10px;color:white;cursor:pointer;background:linear-gradient(#271d48,#18152300) padding-box,linear-gradient(180deg,rgba(255,255,255,0.13) -0.61%,rgb(255 255 255 / 41%) -0.43%,rgb(255 255 255 / 4%) 13.63%,rgb(255 255 255 / 0%) 100%) border-box}#mainSubmitButton{border-radius:10px;border:1px solid rgba(255,255,255,0.13);background:linear-gradient(180deg,rgba(143,55,255,0.50) -1.09%,rgba(86,33,153,0.50) 98.91%) padding-box,linear-gradient(180deg,rgb(255 255 255 / 16%) -0.61%,rgb(255 255 255 / 41%) -0.43%,rgb(255 255 255 / 17%) 13.63%,rgb(255 255 255 / 0%) 100%) border-box;font-weight:bold;width:75%;padding:12px;color:white;cursor:pointer;opacity:0.5}#mainSubmitButton.active{opacity:1;box-shadow:0px 0px 7px 3px #9037FF}.hide{color:transparent}.glowEffect{box-shadow:rgb(143,55,255) 0px 0px 8px 0px}.ai-gen-title{font-size:25px;margin-bottom:30px;letter-spacing:1.5px;font-weight:400;padding-right:0px;text-align:center;color:white;padding:8px 16px}.ai-gen-small-title{font-size:20px;margin-top:30px;margin-bottom:10px}.ai-gen-link{color:white;padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:linear-gradient(#0f0824,#0c071f) padding-box,linear-gradient(180deg,rgba(255,255,255,0.13) -0.61%,rgba(255,255,255,0.46) -0.43%,rgba(255,255,255,0.2) 13.63%,rgba(255,255,255,0.03) 100%) border-box;margin:10px auto;font-size:18px;text-align:center;width:calc(min(200px,80vw))}.ai-gen-link:hover{box-shadow:rgb(143,55,255) 0px 0px 8px 0px}.last-gen-link{margin-bottom:50px}.ocean{width:100%;height:100%;padding:0;margin:0;top:0px;z-index:0;position:fixed;mix-blend-mode:screen;opacity:0.3;pointer-events:none}@media screen and (max-width:800px){.hero{margin-top:110px}}@media screen and (max-width:600px){.hero{margin-top:80px}textarea{width:95%}#inputArea{margin:auto;display:flex;flex-direction:column;align-items:center}#description-title{font-size:16px;margin:0px 10px;letter-spacing: 0.05em;line-height: 1.5;width:80%}#Button{padding:10px;width:200px;max-width:200px}#mainSubmitButton{width:70%}}@media screen and (max-width:450px){#heroChatBox{padding-top:12px!important;padding-bottom:12px!important}.ai-gen-link{width:80vw}}@media screen and (max-width:420px){#heroChatBox{font-size:16px}}@media screen and (max-width:330px){.hero{width:95vw}textarea{font-size:16px}#heroChatBox{white-space:nowrap}#mainSubmitButton{width:60%}#inspireMeButton{width:200px}}
+            
+        </style>
+
+<style type="text/css">
+
+body {
+    background: radial-gradient(circle, #1e215d, #3a2d6f, #5c407e, #2b2762, #4a336e, #0d1b2a)!important;
+    background-size: 300% 300% !important;
+}
+
+
+
+.button-index-1 {
+            background-color: #8e44ad; /* Color lila */
+            color: white; /* Color del texto */
+            border: none;
+            border-radius: 20px; /* Bordes redondeados */
+            padding: 10px 20px; /* Espaciado interno */
+            font-size: 16px; /* Tamaño de la fuente */
+            font-weight: bold; /* Fuente gruesa */
+            cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+            box-shadow: 0 4px 10px rgba(142, 68, 173, 0.4); /* Sombra para la ligera iluminación */
+            transition: all 0.3s ease; /* Transición suave */
         }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+        .button-index-1:hover {
+            box-shadow: 0 6px 12px rgba(142, 68, 173, 0.6); /* Sombra más intensa al pasar el mouse */
+            transform: translateY(-2px); /* Efecto de elevación */
         }
-        h1 {
-            color: #ff6600;
-            font-size: 2em;
+
+        .button-index-2 {
+            background-color: white; /* Color blanco */
+            margin-right:5px;
+            margin-bottom:5px;
+            color: black; /* Color del texto */
+            border: 1px solid black; /* Borde negro */
+            border-radius: 20px; /* Bordes redondeados */
+            padding: 10px 20px; /* Espaciado interno */
+            font-size: 16px; /* Tamaño de la fuente */
+            font-weight: bold; /* Fuente gruesa */
+            cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+            transition: all 0.3s ease; /* Transición suave */
         }
-        p {
-            color: #666;
-            font-size: 1.2em;
-        }
-    </style>
+
+#land-description{
+    font-weight: bold!important;
+}
+
+
+</style>
+
+
+
 </head>
-<body>
-    <div class="container">
-        <h1>En Mantenimiento...</h1>
-        <p>Estamos trabajando para mejorar nuestro sitio. Vuelve pronto.</p>
+   
+
+       
+       <header>
+           
+<style>
+  :root {
+ --white: rgba(255, 255, 255, 1);
+ --clear: rgba(255, 255, 255, 0.04);
+ --cod-gray: rgba(8, 8, 8, 1);
+ --cod-gray-2: rgba(9, 9, 9, 1);
+ --pink: #c549fe;
+ --purple: #7000ff;
+ --font-size-xxs: 24px;
+ --font-size-xs: 26px;
+ --font-size-s: 32px;
+ --font-size-m: 40px;
+ --font-size-l: 48px;
+}
+a.button {
+ display: flex;
+ flex-direction: row;
+ width: 35px;
+ padding: 5px 95px;
+ justify-content: center;
+ align-items: center;
+ gap: 10px;
+ border-radius: 12px;
+ font-size: 18px;
+ text-align: center;
+ font-style: normal;
+}
+
+.nav-items {
+ display: flex;
+ justify-content: space-between;
+ margin-top: 14px;
+ margin-left: 16px;
+ margin-right: 16px;
+ height: 45px;
+}
+
+.nav-buttons {
+ display: flex;
+ flex-direction: row;
+}
+
+.hidden-icon {
+ display: none;
+}
+
+.exit {
+ display: flex;
+ flex-direction: row;
+ position: relative;
+ justify-content: right;
+ right: 10px;
+ top: 10px;
+ cursor: pointer;
+ margin: 10px;
+}
+
+a.button.login, a.button.headerbutton {
+ z-index: 2;
+ width: fit-content;
+ background: transparent;
+ border: 1px solid transparent;
+ border-radius: 12px;
+ color: var(--white);
+ white-space: nowrap;
+ letter-spacing: 2%;
+ margin-right: 12px;
+ cursor: pointer;
+ transition: none;
+ padding: 5px 10px;
+ height: 32px;
+ margin-left: auto;
+ font-weight: 500;
+ font-size: 16px;
+}
+
+a.button.chatbutton,
+a.button.imagebutton {
+ background: var(--clear);
+ border: none;
+ color: var(--white);
+ font-weight: bold;
+ letter-spacing: 2%;
+ margin-right: 12px;
+ transition: background 0.4s ease;
+ cursor: pointer;
+ backdrop-filter: blur(10px);
+ z-index: 2;
+}
+
+a.button.chatbutton,
+a.button.imagebutton {
+ display: flex;
+ flex-direction: row;
+ width: 240px;
+ margin-right: 0px;
+ justify-content: space-around;
+ cursor: pointer;
+ backdrop-filter: blur(10px);
+ z-index: 2;
+}
+
+a.button.chatbutton:hover {
+ background: var(--purple);
+}
+a.button.imagebutton:hover {
+ background: var(--pink);
+}
+
+a.button.menu {
+ background: none;
+ border: none;
+ width: 24px;
+ padding: 0px;
+ cursor: pointer;
+}
+
+.menu-icon {
+   font-size: 30px;
+   font-weight: bold;
+   cursor: pointer;
+   vertical-align: middle;
+}
+
+.dropbtn {
+   color: white;
+   border-radius: 10px;
+   cursor: pointer;
+   background: transparent;
+   border: none;
+   margin: auto;
+}
+
+#userIconDrop {
+ display: none;
+}
+
+.usericon {
+ width: 75px;
+ height: 75px;
+ border-radius: 12px;
+ margin: auto 24px 12px 0px;
+ object-fit: cover;
+}
+
+.nav-profile-section {
+ display: flex;
+ flex-direction: row;
+ cursor: pointer;
+ justify-content: center;
+ padding-right: 20px;
+}
+
+.nav-usernames {
+ gap: 6px;
+ margin-bottom: 3px;
+ margin-bottom: 6px;
+}
+
+.nav-profilename {
+ margin: auto;
+ margin-bottom: 0px;
+ white-space: normal;
+}
+
+.nav-username {
+ margin: auto;
+ margin-top: 0px;
+ white-space: normal;
+ max-width: 170px;
+ overflow-wrap: break-word;
+ word-wrap: normal;
+ word-break: break-word;
+ font-size: 13px;
+}
+
+.nav-profile-button {
+ display: flex;
+ flex-direction: column;
+ background: #8f37ff;
+ border: none;
+ width: 77%;
+ font-family: inherit;
+ color: var(--white);
+ white-space: nowrap;
+ letter-spacing: 2%;
+ margin: auto;
+ padding: 12px;
+ margin: auto;
+ margin-top: 0px;
+ transition: background 0.2s ease;
+ cursor: pointer;
+ border-radius: 12px;
+ align-items: center;
+ font-size: 18px;
+}
+
+.profile-button:hover {
+ background: var(--pink);
+}
+
+#navProfileSection{
+ display: none;
+}
+
+#navProfileButton{
+ display: none;
+}
+
+.pages {
+ margin-bottom: 12px;
+}
+
+.menu-options {
+ font-size: 18px;
+ font-style: normal;
+ font-weight: 400;
+ line-height: 52px;
+ padding: 2px 0px;
+}
+
+.pages a {
+ display: flex;
+ flex-direction: column;
+ justify-content: space-around;
+ color: white;
+ text-decoration: none;
+ width: 77%;
+ margin: auto;
+ margin: 0px 10px;
+ padding: 0 0 0 46px;
+}
+
+.pages a:hover {
+ background-color: var(--clear);
+ border-radius: 12px;
+ width: auto;
+}
+
+.settings,
+.logout {
+ display: flex;
+ flex-direction: row;
+ gap: 16px;
+ align-items: center;
+ margin: 4px 4px 0 16px;
+ background: none;
+ border: none;
+ height: 52px;
+ font-size: 18px;
+ font-family: inherit;
+ color: white;
+ cursor: pointer;
+ width: 95%;
+}
+
+.logout {
+ width: auto;
+ padding: 0px 0px 0px 40px;
+}
+
+.menu-border {
+ border: 1px solid rgba(255, 255, 255, 0.13);
+ width: 100%;
+ height: auto;
+}
+
+.hero{
+    width:95%;
+    max-width:1430px;
+    margin-top:25px;
+}
+.container-land{
+    width:100%;
+}
+@media screen and (max-width: 750px) {
+ a.button.musicgenerator {
+     display: none;
+   }
+}
+
+@media screen and (max-width: 620px) {
+   .hero h1 {
+       font-size: 76px;
+   }
+   .titlesparkle {
+       top: -55px;
+       height: 34%;
+       margin-left: -60px;
+   }
+}
+
+@media screen and (max-width: 600px) {
+ a.button.imagegenerator, a.button.musicgenerator {
+   display: none;
+ }
+}
+
+@media screen and (max-width: 500px) {
+ .nav-buttons {
+   justify-content: space-between;
+   width: 100%;
+ }
+ a.button.login,  a.button.headerbutton {
+   font-size: 16px;
+   margin-right: 8px;
+ }
+ a.button.login {
+   display: none;
+ }
+
+}
+
+@media screen and (max-width: 420px) {
+   .hero h1 {
+       font-size: 56px;
+   }
+   .titlesparkle {
+       top: -40px;
+       margin-left: -55px;
+   }
+   a.button.headerbutton {
+     font-size: 13px;
+     margin-right: 6px;
+   }
+}
+
+@media screen and (max-width: 345px) {
+   .hero h1 {
+       font-size: 48px;
+   }
+   .titlesparkle {
+       top: -40px;
+       margin-left: -52px;
+   }
+   a.button.headerbutton {
+     font-size: 12px;
+     margin-right: 2px;
+     padding: 5px 5px;
+   }
+}
+
+@media screen and (max-width: 300px) {
+ .nav-buttons {
+   justify-content: flex-end;
+   width: 100%;
+ }
+ a.button.videogenerator, a.button.musicgenerator {
+   display: none;
+ }
+ a.button.aichat {
+     font-size: 14px;
+ }
+}
+
+
+</style>
+
+
+<style>
+
+    
+    
+    .charts-12345 {
+        position: relative;
+        width: 600px;
+        height: 400px; /* Ajusta la altura para que sea un cubo */
+        transform-style: preserve-3d; 
+        transition: transform 0.5s ease; 
+    }
+
+    .imagen-12345 {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        background-size: cover;
+        background-position: center;
+    }
+
+    .imagen1-custom { background-image: url('./design/images/ohlc_chart_4.png'); /* Cambia la URL a tu imagen */ }
+    .imagen2-custom { background-image: url('./design/images/ohlc_chart_3.png'); /* Cambia la URL a tu imagen */ }
+    .imagen3-custom { background-image: url('./design/images/ohlc_chart_2.png'); /* Cambia la URL a tu imagen */ }
+    .imagen4-custom { background-image: url('./design/images/ohlc_chart.png'); /* Cambia la URL a tu imagen */ }
+
+    /* Posicionamiento de las imágenes */
+    .imagen1-custom { transform: rotateY(0deg) translateZ(300px); }    /* Frente */
+    .imagen2-custom { transform: rotateY(90deg) translateZ(300px); }   /* Derecha */
+    .imagen3-custom { transform: rotateY(180deg) translateZ(300px); }  /* Detrás */
+    .imagen4-custom { transform: rotateY(-90deg) translateZ(300px); }  /* Izquierda */
+
+    .boton-12345 {
+        position: absolute;
+        top: 50%; /* Centrado vertical */
+        transform: translateY(-50%); /* Ajustar la posición */
+        background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        font-weight: bold;
+        transition: background-color 0.3s;
+        z-index: 10; 
+    }
+
+    .boton-12345:hover {
+        background-color: rgba(255, 255, 255, 1); 
+    }
+
+    .boton-left-12345 {
+        left: 10px; 
+    }
+
+    .boton-right-12345 {
+        right: 10px;
+    }
+
+    @media screen and (max-width: 700px) {
+        .charts-12345 {
+            width: 580px;
+            height:350px;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .charts-12345 {
+            width: 480px;
+            height:300px;
+        }
+
+    }
+
+    @media screen and (max-width: 500px) {
+        .charts-12345 {
+            width: 380px;
+            height:250px;
+        }
+
+    }
+
+    @media screen and (max-width: 400px) {
+        .charts-12345 {
+            width: 280px;
+            height:190px;
+        }
+
+    }
+
+    @media screen and (max-width: 300px) {
+        .charts-12345 {
+            width: 250px;
+            height:150px;
+        }
+
+    }
+
+    @media (max-width: 370px) {
+    #login-header-title{
+        font-size:30px;
+    }
+    .button.login-email{
+        margin-bottom: 40px;
+    }
+}
+@media (max-width: 320px) {
+    .options-container{
+        width:220px;
+    }
+    .login-active{
+        padding: 0px 21px;
+    }
+    .signup{
+        padding: 0px 21px;
+    }
+    .email-container{
+        width:220px;
+    }
+    .password-container{
+        width:220px;
+    }
+    .reenter-password-container{
+        width:220px;
+    }
+    .button.login-email{
+        width:220px;
+        margin-bottom: 30px;
+    }
+    #login-button-dropdown{
+        display:none;
+    }
+}
+</style>
+
+<div class="nav-items">
+   <a class="logo-link" href="./">
+     <img src="./design/images/logo.png">
+<!--   Lawyers want our name in the header so we can get our trademark reapproved   -->
+     <p>RoarDeFi</p>
+   </a>
+   <div class="nav-buttons">
+        <a id="nav-page-1" class="button headerbutton aichat" href="./candlecharts.html"></a>
+        <a id="nav-page-2" class="button headerbutton imagegenerator" href="./memecoins.html"></a>
+        <a id="nav-page-3" class="button headerbutton videogenerator" href="./heatmaps.html"></a>
+        <a id="nav-page-4" class="button login" id="headerLoginButton" onclick="openLogin()"></a>
+       <nav>
+           <ul>
+               <li class="dropdown">
+                   <button class="drop-menu-button" id="dropMenuButton">
+                       <img src="/static/images/HiUser.svg" class="menu-icon dropbtn" id="userIconDrop" loading="lazy">
+                       <img src="./design/images/dropmenu.png" class="menu-icon dropbtn" id="sandwichIconDrop" loading="lazy">
+                   </button>
+                   <ul id="mainNavDropdown">
+                       <div class="exit">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                           <path d="M11.9997 10.586L16.9497 5.63599L18.3637 7.04999L13.4137 12L18.3637 16.95L16.9497 18.364L11.9997 13.414L7.04974 18.364L5.63574 16.95L10.5857 12L5.63574 7.04999L7.04974 5.63599L11.9997 10.586Z" fill="white"></path>
+                         </svg>
+                       </div>
+                       <div id="navProfileSection" class="nav-profile-section">
+                         <img class="usericon" id="navUserAvatar" alt="avatar" loading="lazy" onclick="window.location.replace('/dashboard/profile')" src="/static/images/dolphin-icon.jpeg">
+                         <div class="nav-usernames">
+                           <p class="nav-profilename" id="navUserName"></p>
+                           <p class="nav-username" id="navUserEmail"></p>
+                         </div>
+                       </div>
+                       <button id="navProfileButton" class="button nav-profile-button" onclick="window.location.replace('/dashboard/profile')">View Profile</button>
+                       <div class="menu-options">
+                         <div id="dropdown-pages" class="pages">
+                            <!--
+                            <div>
+                                <a href="/machine-learning-model/text2img" id="menu-page-1" class="ai-generators"></a>
+                                <a href="/video" id="menu-page-2" class="ai-generators"></a>
+                                <a href="/music" id="menu-page-3" class="ai-generators"></a>
+                                <a href="/docs" id="menu-page-4" class="apidocs"></a>
+                            </div>
+                            -->
+                           
+                         </div>
+                         <div class="menu-settings">
+                           <div class="menu-border"></div>
+                           <button id="login-button-dropdown" class="logout">
+                             Login
+                           </button>
+                         </div>
+                       </div>
+                   </ul>
+               </li>
+           </ul>
+       </nav>
+   </div>
+</div>
+
+       </header>
+       
+       
+ 
+
+
+
+
+<canvas
+   id="canvas"
+   style="width: 100%;
+   height: 100%;
+   padding: 0;
+   margin: 0;
+   top: 0px;
+   z-index: 5;
+   position: fixed;
+   mix-blend-mode: screen;
+   opacity: 1;
+   pointer-events: none;"
+ ></canvas>
+ <script>
+   const canvas = document.getElementById("canvas");
+   const c = canvas.getContext("2d");
+
+   let w= window.innerWidth;
+   let h= window.innerHeight;
+
+   const setCanvasExtents = () => {
+
+     canvas.width = w;
+     canvas.height = h;
+   };
+
+   setCanvasExtents();
+
+   window.onresize = () => {
+     setCanvasExtents();
+   };
+
+   const makeStars = count => {
+     const out = [];
+     for (let i = 0; i < count; i++) {
+       const s = {
+         x: Math.random() * 1600 - 800,
+         y: Math.random() * 900 - 450,
+         z: Math.random() * 1000
+       };
+       out.push(s);
+     }
+     return out;
+   };
+
+   let stars = makeStars(5000);
+
+   const clear = () => {
+     c.fillStyle = "black";
+     c.fillRect(0, 0, canvas.width, canvas.height);
+   };
+
+   const putPixel = (x, y, brightness) => {
+     const intensity = brightness * 255;
+     const rgb = "rgb(" + intensity + "," + intensity + "," + intensity + ")";
+     c.fillStyle = rgb;
+     c.fillRect(x, y, 1, 1);
+   };
+
+   const moveStars = distance => {
+     const count = stars.length;
+     for (var i = 0; i < count; i++) {
+       const s = stars[i];
+       s.z -= distance;
+       while (s.z <= 1) {
+         s.z += 1000;
+       }
+     }
+   };
+
+   let prevTime;
+   const init = time => {
+     prevTime = time;
+     requestAnimationFrame(tick);
+   };
+
+   const tick = time => {
+     let elapsed = time - prevTime;
+     prevTime = time;
+
+     moveStars(elapsed * 0.02);
+
+     clear();
+
+     const cx = w / 2;
+     const cy = h / 2;
+
+     const count = stars.length;
+     for (var i = 0; i < count; i++) {
+       const star = stars[i];
+
+       const x = 2*cx + star.x / (star.z * 0.001);
+       const y = 2*cy + star.y / (star.z * 0.001);
+
+       if (x < 0 || x >= w || y < 0 || y >= h) {
+         continue;
+       }
+
+       const d = star.z / 1000.0;
+       const b = 1 - d * d;
+
+       putPixel(x, y, b);
+     }
+
+     requestAnimationFrame(tick);
+   };
+
+   requestAnimationFrame(init);
+
+   // add window resize listener:
+   window.addEventListener('resize', function() {
+     w = window.innerWidth;
+     h = window.innerHeight;
+     setCanvasExtents();
+   });
+ </script> 
+
+<script>
+    let angulo = 0;
+
+    function rotar12345(direccion) {
+        angulo += direccion * 90;
+        document.getElementById('charts-12345').style.transform = `rotateY(${angulo}deg)`;
+    }
+</script>
+
+
+
+
+ <div class="hero">
+
+    <div class="container-land">
+   
+        <div class="header" data-v-7bf311b9="" data-v-0237a791="">
+            
+            
+            <div class="header__text-container" data-v-7bf311b9="">
+                <div data-v-7bf311b9="">
+                    <h1 id="land-description" data-v-7bf311b9=""> Order Book Liquidity
+                        <br data-v-7bf311b9=""> Heatmaps
+                    </h1>
+                    <h3 data-v-7bf311b9="">Heatmap charts for trading analysis
+    
+                    </h3>
+                </div>
+                
+                <div data-v-7bf311b9="">
+                    <button class="button-index-2">
+                        <a href="./api.html" style="color:black;text-decoration: none;">
+                            API Guide
+                        </a>
+                    </button>
+                    <button class="button-index-1">
+                        <a href="./candlecharts.html" style="color:white;text-decoration: none;">
+                            OHLC charts 
+                        </a>
+                    </button>
+                </div>
+            </div>
+                
+                
+                <div id="container-charts" class="header__screens" data-v-7bf311b9="">
+                
+                    <div class="sr_prevent_flickering --1 noselect" data-v-7bf311b9="" data-sr-id="0" style="visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transition: all, opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);">
+                        <img id="example-chart-1" class="charts" src="./design/images/heatmap_example.png" width="240" height="200" style="border-radius: 25px;" alt="imagen">
+                    </div>
+        
+        
+                    <div class="sr_prevent_flickering --2" data-v-7bf311b9="" data-sr-id="2" style="visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transition: all, opacity 1.2s cubic-bezier(0.5, 0, 0, 1), transform 1.2s cubic-bezier(0.5, 0, 0, 1);">
+                        <img id="example-chart-2" class="charts" src="./design/images/ohlc_chart.png" width="306" height="255" style="border-radius: 25px;" alt="imagen">
+                    </div>
+        
+        
+                    <div id="example-chart-3" class="sr_prevent_flickering --3" data-v-7bf311b9="" data-sr-id="3" style="visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transition: all, opacity 1.8s cubic-bezier(0.5, 0, 0, 1), transform 1.8s cubic-bezier(0.5, 0, 0, 1);">
+                        <div class="header__screen-glow" data-v-7bf311b9="">
+                            <img id="chart3" src="./design/images/ohlc_chart_2.png" width="390" height="325" style="border-radius: 25px;" alt="imagen">
+                        </div>
+                    </div>
+        
+                </div>
+    
+            
+    
+        </div>
+    
     </div>
-</body>
+    <br>
+   <br>
+   <br>
+   <br>
+   <br>
+    
+
+
+
+
+
+
+   <h2 class="title">
+    Real Time Limit Order Heatmaps
+   </h2>
+    <div id="description-title">
+        <p>
+            Track real-time market sentiment for advanced trading
+        </p>
+    </div>
+
+    <div id="charts12345-container" style="position: relative;">
+        <div class="charts-12345" id="charts-12345">
+            <div class="imagen-12345 imagen1-custom"></div>
+            <div class="imagen-12345 imagen2-custom"></div>
+            <div class="imagen-12345 imagen3-custom"></div>
+            <div class="imagen-12345 imagen4-custom"></div>
+        </div>
+        <button class="boton-12345 boton-left-12345" onclick="rotar12345(-1)">&#9664;</button>
+        <button class="boton-12345 boton-right-12345" onclick="rotar12345(1)">&#9654;</button>
+    </div>
+    
+   
+ </div>
+
+
+ <div class="ai-gen-title">
+    Advanced trading with Heatmap charts
+  </div>
+
+ <section class="faq-section">
+    <div class="faq-header">
+        <p>Advanced Trading Tools</p>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq1">
+        <label class="faq-question" for="faq1">Why don't traditional indicators predict the market as well as additional data like <span class="highlight">Limit Orders</span>?</label>
+        <div class="faq-answer">
+            <p>While traditional indicators can help analyze trends, they often lag behind market movements. By incorporating additional data like <span class="highlight">bids and asks</span>, you gain real-time insight into market sentiment and immediate buying or selling intentions, providing a more accurate assessment of potential price movement.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq2">
+        <label class="faq-question" for="faq2">How do <span class="highlight">heatmap charts</span> enhance pattern recognition in market data?</label>
+        <div class="faq-answer">
+            <p>Heatmap charts process extensive historical and real-time data to detect recurring patterns in buying and selling behavior. By identifying consistent patterns, these charts highlight areas where <span class="highlight">bullish</span> or <span class="highlight">bearish pressure</span> may be forming, enabling traders to anticipate shifts in market sentiment.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq3">
+        <label class="faq-question" for="faq3">How can heatmap charts help interpret <span class="highlight">pumping</span> and <span class="highlight">dumping</span> activities?</label>
+        <div class="faq-answer">
+            <p>Heatmap charts can reveal <span class="highlight">pumping</span> activity, indicated when sell orders are placed above the trade price, and <span class="highlight">dumping</span> activity, shown when they’re placed below. This allows traders to spot potential market manipulation, assess risks, and adjust their strategies to mitigate sudden price shifts.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq4">
+        <label class="faq-question" for="faq4">What role does the <span class="highlight">order heatmap</span> play in trading analysis?</label>
+        <div class="faq-answer">
+            <p>The <span class="highlight">order heatmap</span> visualizes the distribution of buy and sell orders, providing insights into areas of high demand or supply. This data helps traders identify zones with strong support or resistance, understand overall market sentiment, and predict potential price reactions at critical levels.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq5">
+        <label class="faq-question" for="faq5">How does analyzing <span class="highlight">bullish</span> and <span class="highlight">bearish pressure</span> impact decision-making?</label>
+        <div class="faq-answer">
+            <p><span class="highlight">Bullish pressure</span> occurs when bid prices are higher than the current trade price, signaling strong buying interest, while <span class="highlight">bearish pressure</span> is indicated when ask prices fall below, suggesting selling sentiment. Heatmap charts capture these pressures, helping traders interpret the prevailing market sentiment for better decision-making.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq6">
+        <label class="faq-question" for="faq6">Can heatmap charts predict market direction based on bid and ask volumes?</label>
+        <div class="faq-answer">
+            <p>Heatmap charts analyze bid and ask volumes to assess market sentiment and potential price movement. Although they don't predict exact future prices, understanding <span class="highlight">buying</span> or <span class="highlight">selling pressures</span> helps traders anticipate possible support and resistance levels.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq7">
+        <label class="faq-question" for="faq7">What are the benefits of combining <span class="highlight">market depth</span> with heatmap charts for analysis?</label>
+        <div class="faq-answer">
+            <p>Combining <span class="highlight">market depth</span> data with heatmap charts offers a detailed view of bid and ask volumes at various price levels. This allows traders to assess liquidity, evaluate <span class="highlight">bullish</span> or <span class="highlight">bearish</span> pressures, and anticipate potential market reversals with higher accuracy.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq8">
+        <label class="faq-question" for="faq8">How do heatmap charts help identify hidden <span class="highlight">market sentiment</span>?</label>
+        <div class="faq-answer">
+            <p>Heatmap charts analyze order flow patterns, detecting sentiment shifts that may not be visible from price alone. By examining areas where buying or selling pressures concentrate, traders can gain insight into hidden <span class="highlight">market sentiment</span> and potentially act before trends are visible on traditional charts.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq9">
+        <label class="faq-question" for="faq9">Why is real-time analysis crucial for trading with heatmap charts?</label>
+        <div class="faq-answer">
+            <p>Real-time analysis is essential to capture immediate shifts in <span class="highlight">buying</span> and <span class="highlight">selling pressures</span>. By tracking real-time bid and ask data, heatmap charts enable traders to quickly adapt to changing market conditions, improving the precision of their decisions in fast-paced markets.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <input type="checkbox" id="faq10">
+        <label class="faq-question" for="faq10">What types of predictions can heatmap charts provide with additional market data?</label>
+        <div class="faq-answer">
+            <p>Heatmap charts use bid and ask volumes, historical price data, and order flow to forecast likely price reactions. While they don’t predict specific outcomes, they enable traders to prepare for shifts driven by <span class="highlight">bullish</span> or <span class="highlight">bearish pressures</span> in real time, supporting a responsive trading strategy.</p>
+        </div>
+    </div>
+    
+    
+    
+</section>
+
+
+
+
+       
+       
+       
+
+
+
+
+       
+       <footer>
+           
+           
+           
+           
+
+
+           <div class="footer-row">
+               <div class="leftfooter">
+                   <a href="/">
+                       <img src="./design/images/logo.png" style="width:40px;height:40px;" alt="flops">
+                       <p>Roar DeFi</p>
+                   </a>
+               </div>
+               <div class="rightfooter">
+                   <a href="./index.html" class="contact">Contact</a>
+                   <a href="./index.html" class="press">Privacy</a>
+                   <a href="./index.html" class="legal">Terms</a>
+                   <!--
+                   <a class=" " href="https://twitter.com/" target="_blank"><img src="/static/images/twitter_logo.svg" alt="xlogo" class="xlogo"></a>
+                   <a class=" " href="https://www.linkedin.com/" target="_blank"><img src="/static/images/linkedin_logo.svg" alt="linkedinlogo" class="linkedinlogo"></a>
+                     -->
+                </div>
+           </div>
+
+           
+       </footer>
+       <div id="principal-container"></div>
+       <script src="./design/login_page_blue.js"></script>
+       <script src="./design/dynamic_content_general.js"></script>
+       
+   
+       <script>
+
+        function mainNavDrop() {
+            document.getElementById("mainNavDropdown").classList.toggle("show-dropdown");
+        }
+        
+        if (document.getElementById("dropMenuButton")) {
+            document.getElementById("dropMenuButton").addEventListener("click", function(event) {
+                event.stopPropagation();
+                mainNavDrop();
+            }, false);
+        }
+        
+        window.onclick = function(event) {
+            if (!event.target.closest('.dropdown-link') && !event.target.closest('.content-dropdown-link') && !event.target.matches('.dropbtn')) {
+                if (document.getElementById("contentNavDropdown")) {
+                    var contentDropdown = document.getElementById("contentNavDropdown");
+                    if (contentDropdown && contentDropdown.classList.contains('show-dropdown')) {
+                        contentDropdown.classList.remove('show-dropdown');
+                    }
+                }
+        
+                var mainDropdown = document.getElementById("mainNavDropdown");
+                if (mainDropdown && mainDropdown.classList.contains('show-dropdown')) {
+                    mainDropdown.classList.remove('show-dropdown');
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        </script>
+
 </html>
