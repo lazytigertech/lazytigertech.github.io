@@ -1,7 +1,7 @@
 
 document.getElementById('nav-page-1').textContent="OHLC Charts";
 document.getElementById('nav-page-2').textContent="High Frequency";
-document.getElementById('nav-page-3').textContent="Heatmaps";
+document.getElementById('nav-page-3').textContent="DEX charts";
 /*document.getElementById('nav-page-4').textContent="Login";*/
 
 const dynamic_dropdown=`<div>
