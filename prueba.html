@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>WebLLM con barra de progreso</title>
+</head>
+
+<body>
+
+<h3>Chat local con WebLLM</h3>
+
+<div id="status">Preparando modelo…</div>
+
+<div style="width:420px;border:1px solid #aaa;height:12px">
+  <div id="bar" style="height:12px;width:0%;background:#4caf50"></div>
+</div>
+
+<br>
+
+<div id="chat" style="border:1px solid #ccc;padding:10px;width:420px;height:260px;overflow-y:auto"></div>
+
+<input id="msg" style="width:330px" placeholder="Escribe tu pregunta..." disabled />
+<button id="send" disabled>Enviar</button>
+
+<script type="module">
+import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
+
+const statusEl = document.getElementById("status");
+const bar = document.getElementById("bar");
+const input = document.getElementById("msg");
+const sendBtn = document.getElementById("send");
+const chat = document.getElementById("chat");
+
+let engine = null;
+let ready = false;
+
+function log(msg) {
+  chat.innerHTML += msg + "<br>";
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function init() {
+  statusEl.innerText = "Descargando modelo…";
+
+  engine = await CreateMLCEngine(
+    "Qwen2.5-1.5B-Instruct-q4f16_1-MLC",
+    {
+      initProgressCallback(p) {
+        if (!p) return;
+
+        // Progreso numérico (cuando está disponible)
+        if (p.progress !== undefined) {
+          const pct = Math.round(p.progress * 100);
+          bar.style.width = pct + "%";
+          statusEl.innerText = `Cargando modelo: ${pct}%`;
+        }
+
+        // Mensajes de estado (descarga / compilación / init…)
+        if (p.text) {
+          console.log(p.text);
+        }
+      }
+    }
+  );
+
+  // Cuando termina
+  bar.style.width = "100%";
+  statusEl.innerText = "✔ Modelo listo — puedes escribir";
+  ready = true;
+
+  input.disabled = false;
+  sendBtn.disabled = false;
+}
+
+sendBtn.onclick = enviar;
+
+async function enviar() {
+  if (!ready) {
+    alert("⏳ El modelo aún se está cargando…");
+    return;
+  }
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  log("<b>Tú:</b> " + text);
+  input.value = "";
+
+  const response = await engine.chat.completions.create({
+    messages: [{ role: "user", content: text }],
+    stream: true
+  });
+
+  let reply = "<b>Bot:</b> ";
+  log(reply);
+
+  for await (const chunk of response) {
+    const delta = chunk.choices[0]?.delta?.content || "";
+    reply += delta;
+    chat.lastChild.innerHTML = reply;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
