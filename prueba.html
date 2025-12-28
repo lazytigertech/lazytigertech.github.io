@@ -55,7 +55,7 @@ async function init() {
   statusEl.innerText = "Descargando modelo…";
 
   engine = await CreateMLCEngine(
-    "Phi‑3‑mini‑4k‑instruct‑q4f32_1‑MLC",
+    "Phi-3.5-mini-instruct-q4f16_0-MLC",
     {
       initProgressCallback(p) {
         if (!p) return;
