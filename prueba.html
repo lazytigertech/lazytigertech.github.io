@@ -113,6 +113,14 @@ async function enviar() {
 sendBtn.onclick = enviar;
 input.addEventListener("keypress", e => { if (e.key === "Enter") enviar(); });
 
+
+  import { prebuiltAppConfig } from "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@latest/lib/index.js";
+
+// Listar modelos disponibles
+console.log("=== MODELOS DISPONIBLES ===");
+prebuiltAppConfig.model_list.forEach(m => {
+  console.log(m.model_id);
+});
 init();
 </script>
 
