@@ -1,29 +1,38 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<meta charset="utf-8" />
-<title>WebLLM con barra de progreso</title>
+<meta charset="UTF-8">
+<title>Chatbot local con Transformers.js</title>
+<style>
+body { font-family: sans-serif; }
+#chat { border:1px solid #ccc; padding:10px; width:420px; height:300px; overflow-y:auto; margin-bottom:10px; background:#f9f9f9; }
+.burbuja { padding:8px 12px; margin:4px; border-radius:12px; max-width:80%; display:inline-block; }
+.user { background:#d1e7ff; align-self:flex-end; margin-left:auto; }
+.bot { background:#e2ffe2; align-self:flex-start; margin-right:auto; }
+#bar-container { width:420px; border:1px solid #aaa; height:12px; background:#eee; }
+#bar { height:12px; width:0%; background:#eee; transition: width 0.2s, background 0.2s; }
+#input-area { display:flex; }
+#msg { flex:1; padding:6px; }
+#send { padding:6px 12px; }
+</style>
 </head>
-
 <body>
 
-<h3>Chat local con WebLLM</h3>
+<h3>Chatbot local</h3>
 
 <div id="status">Preparando modelo…</div>
-
-<div style="width:420px;border:1px solid #aaa;height:12px">
-  <div id="bar" style="height:12px;width:0%;background:#4caf50"></div>
-</div>
-
+<div id="bar-container"><div id="bar"></div></div>
 <br>
 
-<div id="chat" style="border:1px solid #ccc;padding:10px;width:420px;height:260px;overflow-y:auto"></div>
+<div id="chat"></div>
 
-<input id="msg" style="width:330px" placeholder="Escribe tu pregunta..." disabled />
-<button id="send" disabled>Enviar</button>
+<div id="input-area">
+  <input id="msg" placeholder="Escribe tu pregunta..." disabled />
+  <button id="send" disabled>Enviar</button>
+</div>
 
 <script type="module">
-import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
+import * as tf from "https://cdn.jsdelivr.net/npm/@xenova/transformers/dist/transformers.min.js";
 
 const statusEl = document.getElementById("status");
 const bar = document.getElementById("bar");
@@ -31,77 +40,68 @@ const input = document.getElementById("msg");
 const sendBtn = document.getElementById("send");
 const chat = document.getElementById("chat");
 
-let engine = null;
+let pipeline = null;
 let ready = false;
 
-function log(msg) {
-  chat.innerHTML += msg + "<br>";
+function addMessage(text, clase){
+  const div = document.createElement("div");
+  div.className = `burbuja ${clase}`;
+  div.innerHTML = text;
+  chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
 
+// 🔹 Inicializar modelo
 async function init() {
-  statusEl.innerText = "Descargando modelo…";
+  statusEl.innerText = "Cargando modelo...";
 
-  engine = await CreateMLCEngine(
-    "Qwen2.5-1.5B-Instruct-q4f16_1-MLC",
-    {
-      initProgressCallback(p) {
-        if (!p) return;
-
-        // Progreso numérico (cuando está disponible)
-        if (p.progress !== undefined) {
-          const pct = Math.round(p.progress * 100);
-          bar.style.width = pct + "%";
-          statusEl.innerText = `Cargando modelo: ${pct}%`;
-        }
-
-        // Mensajes de estado (descarga / compilación / init…)
-        if (p.text) {
-          console.log(p.text);
-        }
+  // Carga el pipeline de text-generation usando WebGPU si es posible
+  pipeline = await tf.pipeline("text-generation", "Xenova/phi-2-mini-webgpu", {
+    progress_callback: (progress) => {
+      if(progress && progress.loaded && progress.total){
+        const pct = Math.round((progress.loaded / progress.total)*100);
+        console.log("Progreso:", pct + "%");
+        bar.style.width = pct + "%";
+        bar.style.background = `linear-gradient(to right, #4caf50 ${pct}%, #eee ${100-pct}%)`;
       }
     }
-  );
+  });
 
-  // Cuando termina
   bar.style.width = "100%";
+  bar.style.background = "#4caf50";
   statusEl.innerText = "✔ Modelo listo — puedes escribir";
-  ready = true;
-
   input.disabled = false;
+  sendBtn.disabled = false;
+  ready = true;
+}
+
+// 🔹 Enviar mensaje
+async function enviar() {
+  if(!ready) return;
+  const text = input.value.trim();
+  if(!text) return;
+  addMessage(text, "user");
+  input.value = "";
+  sendBtn.disabled = true;
+
+  let replyDiv = document.createElement("div");
+  replyDiv.className = "burbuja bot";
+  replyDiv.innerHTML = "...";
+  chat.appendChild(replyDiv);
+  chat.scrollTop = chat.scrollHeight;
+
+  const response = await pipeline(text, { max_new_tokens:80, temperature:0.7 });
+
+  replyDiv.innerHTML = response[0].generated_text;
   sendBtn.disabled = false;
 }
 
 sendBtn.onclick = enviar;
-
-async function enviar() {
-  if (!ready) {
-    alert("⏳ El modelo aún se está cargando…");
-    return;
-  }
-
-  const text = input.value.trim();
-  if (!text) return;
-
-  log("<b>Tú:</b> " + text);
-  input.value = "";
-
-  const response = await engine.chat.completions.create({
-    messages: [{ role: "user", content: text }],
-    stream: true
-  });
-
-  let reply = "<b>Bot:</b> ";
-  log(reply);
-
-  for await (const chunk of response) {
-    const delta = chunk.choices[0]?.delta?.content || "";
-    reply += delta;
-    chat.lastChild.innerHTML = reply;
-  }
-}
+input.addEventListener("keypress", e => { if(e.key === "Enter") enviar(); });
 
 init();
 </script>
+
 </body>
 </html>
+ 
