@@ -2,23 +2,25 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Chatbot local con Transformers.js</title>
+<title>Chat con WebLLM y modelo Phi</title>
 <style>
-body { font-family: sans-serif; }
-#chat { border:1px solid #ccc; padding:10px; width:420px; height:300px; overflow-y:auto; margin-bottom:10px; background:#f9f9f9; display:flex; flex-direction:column;}
-.burbuja { padding:8px 12px; margin:4px; border-radius:12px; max-width:80%; display:inline-block; }
-.user { background:#d1e7ff; align-self:flex-end; margin-left:auto; }
-.bot { background:#e2ffe2; align-self:flex-start; margin-right:auto; }
-#bar-container { width:420px; border:1px solid #aaa; height:12px; background:#eee; margin-bottom:10px; }
-#bar { height:12px; width:0%; background:#eee; transition: width 0.2s, background 0.2s; }
-#input-area { display:flex; }
-#msg { flex:1; padding:6px; }
-#send { padding:6px 12px; }
+body { font-family: sans-serif; padding: 12px; }
+#status { margin-bottom: 8px; font-size: 14px; }
+#bar-container { width: 100%; border:1px solid #aaa; height:12px; background:#eee; margin-bottom:10px; }
+#bar { height:12px; width:0%; background:#eee; transition: width 0.3s, background 0.3s; }
+#chat { border:1px solid #ccc; padding:10px; width:100%; height:300px; overflow-y:auto; background:#f9f9f9; display:flex; flex-direction:column; gap:6px; }
+.burbuja { padding:8px 12px; border-radius:12px; max-width:80%; }
+.user { background:#d1e7ff; align-self:flex-end; }
+.bot { background:#e2ffe2; align-self:flex-start; }
+#input-area { display:flex; gap:6px; margin-top:8px; }
+#msg { flex:1; padding:6px; font-size:14px; }
+#send { padding:6px 12px; font-size:14px; }
 </style>
 </head>
 <body>
 
-<h3>Chatbot local</h3>
+<h3>Chat local con WebLLM (Phi)</h3>
+
 <div id="status">Preparando modelo…</div>
 <div id="bar-container"><div id="bar"></div></div>
 
@@ -30,7 +32,7 @@ body { font-family: sans-serif; }
 </div>
 
 <script type="module">
-import { pipeline } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2";
+import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 
 const statusEl = document.getElementById("status");
 const bar = document.getElementById("bar");
@@ -38,10 +40,10 @@ const input = document.getElementById("msg");
 const sendBtn = document.getElementById("send");
 const chat = document.getElementById("chat");
 
-let genPipeline = null;
+let engine = null;
 let ready = false;
 
-function addMessage(text, clase){
+function addMessage(text, clase) {
   const div = document.createElement("div");
   div.className = `burbuja ${clase}`;
   div.innerHTML = text;
@@ -49,21 +51,24 @@ function addMessage(text, clase){
   chat.scrollTop = chat.scrollHeight;
 }
 
-// Inicializar pipeline
 async function init() {
-  statusEl.innerText = "Cargando modelo...";
+  statusEl.innerText = "Descargando modelo…";
 
-  // pipeline con modelo ligero compatible
-  genPipeline = await pipeline("text-generation", "Xenova/distilgpt2", {
-    progress_callback: (progress) => {
-      if(progress && progress.loaded && progress.total){
-        const pct = Math.round((progress.loaded/progress.total)*100);
-        console.log("Progreso:", pct + "%");
-        bar.style.width = pct + "%";
-        bar.style.background = `linear-gradient(to right, #4caf50 ${pct}%, #eee ${100-pct}%)`;
+  engine = await CreateMLCEngine(
+    "Phi-3-mini-4k-instruct-q4f16_2-MLC",
+    {
+      initProgressCallback(p) {
+        if (!p) return;
+        // progreso numérico
+        if (p.progress !== undefined) {
+          const pct = Math.round(p.progress * 100);
+          console.log("Progreso:", pct + "%");
+          bar.style.width = pct + "%";
+          bar.style.background = pct < 100 ? "#4caf50" : "#4caf50";
+        }
       }
     }
-  });
+  );
 
   bar.style.width = "100%";
   bar.style.background = "#4caf50";
@@ -73,32 +78,44 @@ async function init() {
   ready = true;
 }
 
-// Enviar mensaje
 async function enviar() {
-  if(!ready) return;
+  if (!ready) return;
   const text = input.value.trim();
-  if(!text) return;
+  if (!text) return;
   addMessage(text, "user");
   input.value = "";
   sendBtn.disabled = true;
 
   let replyDiv = document.createElement("div");
   replyDiv.className = "burbuja bot";
-  replyDiv.innerHTML = "...";
+  replyDiv.innerHTML = "…";
   chat.appendChild(replyDiv);
   chat.scrollTop = chat.scrollHeight;
 
-  const response = await genPipeline(text, { max_new_tokens:80, temperature:0.7 });
+  const response = await engine.chat.completions.create({
+    messages: [
+      { role: "user", content: text }
+    ],
+    stream: true
+  });
 
-  replyDiv.innerHTML = response[0].generated_text;
+  let reply = "";
+  for await (const chunk of response) {
+    const delta = chunk.choices[0]?.delta?.content || "";
+    reply += delta;
+    replyDiv.innerHTML = reply;
+    chat.scrollTop = chat.scrollHeight;
+  }
+
   sendBtn.disabled = false;
 }
 
 sendBtn.onclick = enviar;
-input.addEventListener("keypress", e => { if(e.key === "Enter") enviar(); });
+input.addEventListener("keypress", e => { if (e.key === "Enter") enviar(); });
 
 init();
 </script>
+
 </body>
 </html>
  
