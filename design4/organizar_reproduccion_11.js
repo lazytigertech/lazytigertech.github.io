@@ -1477,151 +1477,222 @@ const reproductorTrozos = new ReproductorTrozos(canvas_principal);
 */
 
 
+
 /* ===========================
-   REPRODUCTOR CON DECODER PERSISTENTE
+   REPRODUCTOR CON SUB-TROZOS DE 5 FRAMES
 =========================== */
 
 class ReproductorTrozos {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    this.decoder = null;
-    this.segundoActualCargado = -1;
-    this.framesPorSegundo = new Map(); // Map<frameGlobal, VideoFrame temporal>
-    this.ultimoSegundo = -1;
+    this.subTrozos = new Map(); // Map<"segundo-subIndex", {frames: ImageBitmap[], cargando: boolean}>
+    this.FRAMES_POR_SUBTROZO = 5;
+  }
+  
+  // Calcular en qué sub-trozo está un frame
+  getSubTrozoKey(segundo, frameEnSegundo) {
+    const subIndex = Math.floor(frameEnSegundo / this.FRAMES_POR_SUBTROZO);
+    return `${segundo}-${subIndex}`;
   }
   
   async reproducirFrame(segundo, frameEnSegundo) {
-    const frameGlobal = segundo * TARGET_FPS + frameEnSegundo;
+    const subKey = this.getSubTrozoKey(segundo, frameEnSegundo);
+    const frameEnSubTrozo = frameEnSegundo % this.FRAMES_POR_SUBTROZO;
     
-    // Si cambiamos de segundo, recargar
-    if (this.segundoActualCargado !== segundo) {
-      await this.cargarSegundoCompleto(segundo);
-    }
+    // Precargar siguiente sub-trozo
+    this.precargarSiguiente(segundo, frameEnSegundo);
     
-    // Verificar si el frame está disponible
-    if (this.framesPorSegundo.has(frameGlobal)) {
-      const videoFrame = this.framesPorSegundo.get(frameGlobal);
-      
+    // Verificar si el sub-trozo está cargado
+    const data = this.subTrozos.get(subKey);
+    
+    if (data && data.frames && data.frames[frameEnSubTrozo]) {
       try {
         this.ctx.drawImage(
-          videoFrame,
+          data.frames[frameEnSubTrozo],
           0, 0,
           this.canvas.width,
           this.canvas.height
         );
         return true;
       } catch (err) {
-        console.error("Error renderizando:", err);
+        console.error("Error renderizando frame:", err);
         return false;
       }
+    }
+    
+    // Si no está cargado, cargar ahora
+    if (!data || !data.cargando) {
+      this.cargarSubTrozo(segundo, frameEnSegundo);
     }
     
     return false;
   }
   
-  async cargarSegundoCompleto(segundo) {
-    if (!trozos_guardados[segundo]) {
-      console.error(`Trozo ${segundo} no disponible`);
-      return;
+  precargarSiguiente(segundo, frameEnSegundo) {
+    // Calcular siguiente sub-trozo
+    let siguienteFrame = frameEnSegundo + this.FRAMES_POR_SUBTROZO;
+    let siguienteSegundo = segundo;
+    
+    if (siguienteFrame >= TARGET_FPS) {
+      siguienteFrame = 0;
+      siguienteSegundo = segundo + 1;
     }
     
-    // Limpiar frames del segundo anterior
-    if (this.ultimoSegundo >= 0 && this.ultimoSegundo !== segundo) {
-      const inicioAnterior = this.ultimoSegundo * TARGET_FPS;
-      const finAnterior = inicioAnterior + TARGET_FPS;
-      
-      for (let i = inicioAnterior; i < finAnterior; i++) {
-        if (this.framesPorSegundo.has(i)) {
-          const frame = this.framesPorSegundo.get(i);
-          try {
-            frame.close();
-          } catch (e) {}
-          this.framesPorSegundo.delete(i);
-        }
-      }
+    const siguienteKey = this.getSubTrozoKey(siguienteSegundo, siguienteFrame);
+    
+    // Precargar si existe y no está cargado
+    if (trozos_guardados[siguienteSegundo] && !this.subTrozos.has(siguienteKey)) {
+      console.log(`🔄 Precargando sub-trozo ${siguienteKey}...`);
+      this.cargarSubTrozo(siguienteSegundo, siguienteFrame);
     }
     
-    console.log(`🔄 Cargando segundo ${segundo}...`);
+    // Limpiar sub-trozos lejanos (más de 2 sub-trozos atrás)
+    const subActual = Math.floor(frameEnSegundo / this.FRAMES_POR_SUBTROZO);
     
-    const chunk_data = trozos_guardados[segundo];
-    const encodedFrames = getChunks(chunk_data);
-    
-    console.log(`📦 ${encodedFrames.length} frames codificados`);
-    
-    // Cerrar decoder anterior
-    if (this.decoder) {
-      try {
-        this.decoder.close();
-      } catch (e) {}
-    }
-    
-    return new Promise((resolve, reject) => {
-      let outputCount = 0;
-      const frameInicio = segundo * TARGET_FPS;
+    this.subTrozos.forEach((data, key) => {
+      const [seg, sub] = key.split('-').map(Number);
       
-      this.decoder = new VideoDecoder({
-        output: (videoFrame) => {
-          const frameGlobal = frameInicio + outputCount;
-          outputCount++;
-          
-          // ✅ GUARDAR el VideoFrame SIN convertirlo
-          this.framesPorSegundo.set(frameGlobal, videoFrame);
-          
-          console.log(`✓ Frame ${outputCount - 1} guardado como VideoFrame`);
-          
-          if (outputCount === encodedFrames.length) {
-            console.log(`✅ Segundo ${segundo} completo`);
-            this.segundoActualCargado = segundo;
-            this.ultimoSegundo = segundo;
-            resolve();
-          }
-        },
-        error: (e) => {
-          console.error("Decoder error:", e);
-          reject(e);
+      // Limpiar si está más de 2 sub-trozos atrás o en un segundo anterior
+      if (seg < segundo || (seg === segundo && sub < subActual - 2)) {
+        console.log(`🗑️ Liberando sub-trozo ${key}`);
+        if (data.frames) {
+          data.frames.forEach(f => {
+            if (f && f.close) f.close();
+          });
         }
-      });
-      
-      try {
-        this.decoder.configure({ codec: "vp8" });
-        
-        let timestamp = 0;
-        const frameDuration = 1e6 / TARGET_FPS;
-        
-        for (let i = 0; i < encodedFrames.length; i++) {
-          this.decoder.decode(new EncodedVideoChunk({
-            type: i === 0 ? "key" : "delta",
-            timestamp,
-            data: encodedFrames[i],
-          }));
-          timestamp += frameDuration;
-        }
-        
-        this.decoder.flush();
-        
-      } catch (error) {
-        console.error("Error:", error);
-        reject(error);
+        this.subTrozos.delete(key);
       }
     });
   }
   
-  cleanup() {
-    if (this.decoder) {
-      try {
-        this.decoder.close();
-      } catch (e) {}
-    }
+  async cargarSubTrozo(segundo, frameInicial) {
+  if (!trozos_guardados[segundo]) {
+    return;
+  }
+  
+  const subIndex = Math.floor(frameInicial / this.FRAMES_POR_SUBTROZO);
+  const subKey = `${segundo}-${subIndex}`;
+  
+  if (this.subTrozos.has(subKey) && this.subTrozos.get(subKey).cargando) {
+    return;
+  }
+  
+  this.subTrozos.set(subKey, { frames: [], cargando: true });
+  const data = this.subTrozos.get(subKey);
+  
+  console.log(`🔄 Cargando sub-trozo ${subKey}...`);
+  
+  const chunk_data = trozos_guardados[segundo];
+  const encodedFrames = getChunks(chunk_data);
+  
+  // Calcular qué frames GUARDAR (pero decodificar desde el inicio)
+  const inicio = subIndex * this.FRAMES_POR_SUBTROZO;
+  const fin = Math.min(inicio + this.FRAMES_POR_SUBTROZO, encodedFrames.length);
+  
+  console.log(`Decodificando todo, pero guardando solo frames ${inicio} a ${fin - 1}`);
+  
+  return new Promise((resolve, reject) => {
+    const frames = [];
+    const bitmapPromises = [];
+    let outputCount = 0;
     
-    this.framesPorSegundo.forEach((frame, idx) => {
-      try {
-        frame.close();
-      } catch (e) {}
+    const decoder = new VideoDecoder({
+      output: (videoFrame) => {
+        const frameIndex = outputCount++;
+        
+        // ✅ Solo guardar los frames del sub-trozo que necesitamos
+        if (frameIndex >= inicio && frameIndex < fin) {
+          try {
+            const canvas = new OffscreenCanvas(
+              videoFrame.displayWidth,
+              videoFrame.displayHeight
+            );
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(videoFrame, 0, 0);
+            
+            const localIndex = frameIndex - inicio; // Índice relativo en el sub-trozo
+            
+            const bitmapPromise = createImageBitmap(canvas).then(bitmap => {
+              frames[localIndex] = bitmap;
+              console.log(`Frame ${frameIndex} guardado en posición ${localIndex}`);
+              return bitmap;
+            });
+            
+            bitmapPromises.push(bitmapPromise);
+            
+          } catch (err) {
+            console.error(`Error procesando frame ${frameIndex}:`, err);
+          }
+        }
+        
+        // ✅ SIEMPRE cerrar el VideoFrame
+        videoFrame.close();
+      },
+      error: (e) => {
+        console.error("Decoder error:", e);
+        data.cargando = false;
+        reject(e);
+      }
     });
     
-    this.framesPorSegundo.clear();
-    this.segundoActualCargado = -1;
+    try {
+      decoder.configure({ codec: "vp8" });
+      
+      let timestamp = 0;
+      const frameDuration = 1e6 / TARGET_FPS;
+      
+      // ✅ DECODIFICAR TODOS los frames desde el inicio (necesario para VP8)
+      for (let i = 0; i < encodedFrames.length; i++) {
+        // Solo decodificar hasta el final del sub-trozo actual
+        if (i >= fin) {
+          break;
+        }
+        
+        decoder.decode(new EncodedVideoChunk({
+          type: i === 0 ? "key" : "delta", // Solo el frame 0 es key
+          timestamp,
+          data: encodedFrames[i],
+        }));
+        timestamp += frameDuration;
+      }
+      
+      decoder.flush().then(async () => {
+        await Promise.all(bitmapPromises);
+        
+        data.frames = frames;
+        data.cargando = false;
+        
+        decoder.close();
+        
+        console.log(`✅ Sub-trozo ${subKey} cargado (${frames.length} frames guardados de ${fin - inicio} esperados)`);
+        resolve();
+      }).catch(err => {
+        console.error("Error en flush:", err);
+        data.cargando = false;
+        try {
+          decoder.close();
+        } catch (e) {}
+        reject(err);
+      });
+      
+    } catch (error) {
+      console.error("Error configurando decoder:", error);
+      data.cargando = false;
+      reject(error);
+    }
+  });
+}
+  
+  cleanup() {
+    this.subTrozos.forEach((data, key) => {
+      if (data.frames) {
+        data.frames.forEach(f => {
+          if (f && f.close) f.close();
+        });
+      }
+    });
+    this.subTrozos.clear();
   }
 }
 
