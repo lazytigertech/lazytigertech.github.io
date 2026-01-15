@@ -419,6 +419,8 @@ playBtn.onclick = async () => {
    BOTÓN PLAY MODIFICADO
 =========================== */
 
+/*
+//funciona bien y esta asociado ala precarga de 2 segundos
 playBtn.onclick = async () => {  
   if (unica_regla.rectangulos.length == 0) {
     console.log("NINGUN ARCHIVO SUBIDO");
@@ -456,7 +458,49 @@ playBtn.onclick = async () => {
   playBtn.style.display = 'none';
   pauseBtn.style.display = 'inline';
 };
-
+*/
+playBtn.onclick = async () => {  
+  if (unica_regla.rectangulos.length == 0) {
+    console.log("NINGUN ARCHIVO SUBIDO");
+    return;
+  }
+  
+  frame_indice = 0;
+  const all_files_0 = filtrarSublistasPorPropertyGeneral();
+  const files_reproducir_0 = filtrarSublistasPorProperty();
+  const files_reproducir = transformList(files_reproducir_0);
+  
+  const necesitaActualizar = sonDiferentes(files_reproducir, ultimoFilesReproducir);
+  
+  if (necesitaActualizar) {
+    console.log('🔄 Detectados cambios, actualizando...');
+    await actualizar_reproduccion_global(files_reproducir);
+    ultimoFilesReproducir = JSON.parse(JSON.stringify(files_reproducir));
+  }
+  
+  // ✅ LIMPIEZA TOTAL DE DECODIFICACIONES
+  console.log('🧹 Cancelando todas las decodificaciones en curso...');
+  reproductorTrozos.cancelarTodasDecodificaciones();
+  reproductorTrozos.cleanup();
+  console.log('✅ Limpieza completada');
+  
+  // ✅ PRECARGAR 2 SEGUNDOS COMPLETOS (actual + siguiente)
+  const segundoActual = Math.floor(globalTime);
+  console.log(`📥 Precargando 2 segundos desde ${segundoActual}...`);
+  
+  try {
+    await precargarDosSegundos(globalTime);
+    console.log('✅ Precarga de 2 segundos completada');
+  } catch (error) {
+    console.error('❌ Error en precarga inicial:', error);
+  }
+  
+  // ✅ REPRODUCIR
+  console.log('▶️ Iniciando reproducción...');
+  reproducir_video_global();
+  playBtn.style.display = 'none';
+  pauseBtn.style.display = 'inline';
+};
 
  
 
@@ -1251,7 +1295,7 @@ async function precargarSubTrozosIniciales(segundoInicio) {
    FUNCIÓN PARA PRECARGAR 2 SEGUNDOS COMPLETOS
 =========================== */
 
-async function precargarDosSegundos(tiempoInicio) {
+async function precargarDosSegundos_1(tiempoInicio) {
   const segundoActual = Math.floor(tiempoInicio);
   const segundoSiguiente = segundoActual + 1;
   
@@ -1294,7 +1338,7 @@ async function precargarDosSegundos(tiempoInicio) {
    REPRODUCTOR MODIFICADO - PRECARGA 10 SUB-TROZOS
 =========================== */
 
-class ReproductorTrozos {
+class ReproductorTrozos_1 {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
@@ -1603,6 +1647,397 @@ class ReproductorTrozos {
   }
 }
  
+
+
+/* ===========================
+   FUNCIÓN PARA PRECARGAR 2 SEGUNDOS COMPLETOS
+=========================== */
+
+async function precargarDosSegundos(tiempoInicio) {
+  const segundoActual = Math.floor(tiempoInicio);
+  const segundoSiguiente = segundoActual + 1;
+  
+  console.log(`🔄 Precargando segundos ${segundoActual} y ${segundoSiguiente}...`);
+  
+  const promesas = [];
+  
+  // Precargar todos los sub-trozos del segundo actual
+  if (trozos_guardados[segundoActual]) {
+    for (let subIndex = 0; subIndex < 5; subIndex++) {
+      const frameInicio = subIndex * reproductorTrozos.FRAMES_POR_SUBTROZO;
+      const subKey = reproductorTrozos.getSubTrozoKey(segundoActual, frameInicio);
+      
+      if (!reproductorTrozos.subTrozos.has(subKey)) {
+        console.log(`📥 Precargando ${segundoActual}-${subIndex}`);
+        promesas.push(reproductorTrozos.cargarSubTrozo(segundoActual, frameInicio));
+      }
+    }
+  }
+  
+  // Precargar todos los sub-trozos del segundo siguiente
+  if (trozos_guardados[segundoSiguiente]) {
+    for (let subIndex = 0; subIndex < 5; subIndex++) {
+      const frameInicio = subIndex * reproductorTrozos.FRAMES_POR_SUBTROZO;
+      const subKey = reproductorTrozos.getSubTrozoKey(segundoSiguiente, frameInicio);
+      
+      if (!reproductorTrozos.subTrozos.has(subKey)) {
+        console.log(`📥 Precargando ${segundoSiguiente}-${subIndex}`);
+        promesas.push(reproductorTrozos.cargarSubTrozo(segundoSiguiente, frameInicio));
+      }
+    }
+  }
+  
+  await Promise.all(promesas);
+  console.log(`✅ ${promesas.length} sub-trozos precargados`);
+}
+
+
+/* ===========================
+   REPRODUCTOR MODIFICADO - PRECARGA 10 SUB-TROZOS
+=========================== */
+
+class ReproductorTrozos {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.subTrozos = new Map();
+    this.FRAMES_POR_SUBTROZO = 5;
+    this.MAX_REINTENTOS = 5;
+    this.segundoActualReproduciendo = null;
+    this.decodersActivos = new Set(); // ✅ Rastrear decoders activos
+  }
+  
+  // ✅ NUEVA FUNCIÓN: Cancelar todas las decodificaciones
+  cancelarTodasDecodificaciones() {
+    console.log(`🛑 Cancelando ${this.decodersActivos.size} decoders activos...`);
+    
+    // Cerrar todos los decoders activos
+    this.decodersActivos.forEach(decoder => {
+      try {
+        if (decoder.state !== 'closed') {
+          decoder.close();
+        }
+      } catch (e) {
+        console.log('Decoder ya cerrado:', e.message);
+      }
+    });
+    
+    this.decodersActivos.clear();
+    
+    // Limpiar todos los sub-trozos que están cargando
+    this.subTrozos.forEach((data, key) => {
+      if (data.cargando) {
+        console.log(`🗑️ Cancelando carga de ${key}`);
+        data.cargando = false;
+      }
+    });
+    
+    console.log('✅ Todas las decodificaciones canceladas');
+  }
+  
+  getSubTrozoKey(segundo, frameEnSegundo) {
+    const subIndex = Math.floor(frameEnSegundo / this.FRAMES_POR_SUBTROZO);
+    return `${segundo}-${subIndex}`;
+  }
+  
+  async reproducirFrame(segundo, frameEnSegundo) {
+    const subKey = this.getSubTrozoKey(segundo, frameEnSegundo);
+    const frameEnSubTrozo = frameEnSegundo % this.FRAMES_POR_SUBTROZO;
+    
+    // ✅ NUEVA LÓGICA: Precargar S+1 y S+2 (10 sub-trozos en total)
+    this.precargarSiguientesSegundos(segundo);
+    
+    const data = this.subTrozos.get(subKey);
+    
+    if (data && data.frames && data.frames[frameEnSubTrozo]) {
+      try {
+        this.ctx.drawImage(
+          data.frames[frameEnSubTrozo],
+          0, 0,
+          this.canvas.width,
+          this.canvas.height
+        );
+        return true;
+      } catch (err) {
+        console.error("Error renderizando frame:", err);
+        return false;
+      }
+    }
+    
+    if (!data || !data.cargando) {
+      this.cargarSubTrozo(segundo, frameEnSegundo);
+    }
+    
+    return false;
+  }
+  
+  // ✅ NUEVA FUNCIÓN: Precargar 10 sub-trozos (S+1 y S+2)
+  precargarSiguientesSegundos(segundoActual) {
+    const segundoS1 = segundoActual + 1;
+    const segundoS2 = segundoActual + 2;
+    
+    // Precargar 5 sub-trozos de S+1
+    if (trozos_guardados[segundoS1]) {
+      for (let subIndex = 0; subIndex < 5; subIndex++) {
+        const frameInicio = subIndex * this.FRAMES_POR_SUBTROZO;
+        const subKey = this.getSubTrozoKey(segundoS1, frameInicio);
+        
+        if (!this.subTrozos.has(subKey)) {
+          console.log(`🔄 Precargando S+1: ${subKey}`);
+          this.cargarSubTrozo(segundoS1, frameInicio);
+        }
+      }
+    }
+    
+    // Precargar 5 sub-trozos de S+2
+    if (trozos_guardados[segundoS2]) {
+      for (let subIndex = 0; subIndex < 5; subIndex++) {
+        const frameInicio = subIndex * this.FRAMES_POR_SUBTROZO;
+        const subKey = this.getSubTrozoKey(segundoS2, frameInicio);
+        
+        if (!this.subTrozos.has(subKey)) {
+          console.log(`🔄 Precargando S+2: ${subKey}`);
+          this.cargarSubTrozo(segundoS2, frameInicio);
+        }
+      }
+    }
+    
+    // Limpieza: eliminar sub-trozos antiguos (más de 2 segundos atrás)
+    this.subTrozos.forEach((data, key) => {
+      const [seg] = key.split('-').map(Number);
+      
+      if (seg < segundoActual - 2) {
+        console.log(`🗑️ Liberando sub-trozo ${key}`);
+        if (data.frames) {
+          data.frames.forEach(f => {
+            if (f && f.close) f.close();
+          });
+        }
+        this.subTrozos.delete(key);
+      }
+    });
+  }
+  
+  esFrameNegro(bitmap) {
+    try {
+      const testCanvas = new OffscreenCanvas(10, 10);
+      const testCtx = testCanvas.getContext('2d');
+      testCtx.drawImage(bitmap, 0, 0, 10, 10);
+      
+      const imageData = testCtx.getImageData(0, 0, 10, 10);
+      const data = imageData.data;
+      
+      let pixelesNegros = 0;
+      const totalPixeles = 100;
+      
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        
+        if (r < 10 && g < 10 && b < 10) {
+          pixelesNegros++;
+        }
+      }
+      
+      return (pixelesNegros / totalPixeles) > 0.9;
+    } catch (err) {
+      console.error("Error detectando frame negro:", err);
+      return false;
+    }
+  }
+  
+  async cargarSubTrozo(segundo, frameInicial, intento = 1) {
+    if (!trozos_guardados[segundo]) {
+      console.error(`❌ Trozo ${segundo} no disponible`);
+      return;
+    }
+    
+    const subIndex = Math.floor(frameInicial / this.FRAMES_POR_SUBTROZO);
+    const subKey = `${segundo}-${subIndex}`;
+    
+    if (this.subTrozos.has(subKey) && this.subTrozos.get(subKey).cargando) {
+      return;
+    }
+    
+    this.subTrozos.set(subKey, { frames: [], cargando: true });
+    const data = this.subTrozos.get(subKey);
+    
+    console.log(`🔄 Cargando sub-trozo ${subKey} (intento ${intento})...`);
+    
+    const chunk_data = trozos_guardados[segundo];
+    const encodedFrames = getChunks(chunk_data);
+    
+    if (!encodedFrames || encodedFrames.length === 0) {
+      console.error(`❌ No hay frames codificados en trozo ${segundo}`);
+      data.cargando = false;
+      this.subTrozos.delete(subKey);
+      return;
+    }
+    
+    const inicio = subIndex * this.FRAMES_POR_SUBTROZO;
+    const fin = Math.min(inicio + this.FRAMES_POR_SUBTROZO, encodedFrames.length);
+    
+    return new Promise((resolve) => {
+      const frames = [];
+      const bitmapPromises = [];
+      let outputCount = 0;
+      let decoderCerrado = false;
+      
+      const decoder = new VideoDecoder({
+        output: (videoFrame) => {
+          const frameIndex = outputCount++;
+          
+          if (frameIndex >= inicio && frameIndex < fin) {
+            try {
+              const canvas = new OffscreenCanvas(
+                videoFrame.displayWidth,
+                videoFrame.displayHeight
+              );
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(videoFrame, 0, 0);
+              
+              const localIndex = frameIndex - inicio;
+              
+              const bitmapPromise = createImageBitmap(canvas)
+                .then(bitmap => {
+                  if (this.esFrameNegro(bitmap)) {
+                    console.warn(`⚠️ Frame ${frameIndex} detectado como NEGRO`);
+                    bitmap.close();
+                    return null;
+                  } else {
+                    frames[localIndex] = bitmap;
+                    return bitmap;
+                  }
+                })
+                .catch(err => {
+                  console.error(`❌ Error creando bitmap ${frameIndex}:`, err);
+                  return null;
+                });
+              
+              bitmapPromises.push(bitmapPromise);
+            } catch (err) {
+              console.error(`❌ Error procesando frame ${frameIndex}:`, err);
+            }
+          }
+          
+          try {
+            videoFrame.close();
+          } catch (e) {}
+        },
+        error: (e) => {
+          console.error(`❌ DECODER ERROR en sub-trozo ${subKey}:`, e.message);
+          data.cargando = false;
+          
+          if (!decoderCerrado) {
+            try {
+              decoder.close();
+              decoderCerrado = true;
+              this.decodersActivos.delete(decoder); // ✅ Remover de activos
+            } catch (err) {}
+          }
+          
+          if (intento < this.MAX_REINTENTOS) {
+            setTimeout(() => {
+              this.subTrozos.delete(subKey);
+              this.cargarSubTrozo(segundo, frameInicial, intento + 1);
+            }, 200 * intento);
+          }
+          
+          resolve();
+        }
+      });
+      
+      this.decodersActivos.add(decoder); // ✅ Registrar decoder activo
+      
+      try {
+        decoder.configure({ codec: "vp8" });
+        
+        let timestamp = 0;
+        const frameDuration = 1e6 / TARGET_FPS;
+        
+        for (let i = 0; i < fin; i++) {
+          if (!encodedFrames[i] || encodedFrames[i].byteLength === 0) {
+            console.error(`❌ Frame ${i} está vacío`);
+            continue;
+          }
+          
+          decoder.decode(new EncodedVideoChunk({
+            type: i === 0 ? "key" : "delta",
+            timestamp,
+            data: encodedFrames[i],
+          }));
+          
+          timestamp += frameDuration;
+        }
+        
+        decoder.flush()
+          .then(async () => {
+            await Promise.all(bitmapPromises);
+            
+            const framesNegros = frames.filter(f => !f).length;
+            
+            if (!decoderCerrado) {
+              decoder.close();
+              decoderCerrado = true;
+              this.decodersActivos.delete(decoder); // ✅ Remover de activos
+            }
+            
+            if (framesNegros > 0 && intento < this.MAX_REINTENTOS) {
+              console.log(`🔄 Reintentando ${subKey} por ${framesNegros} frames negros`);
+              frames.forEach(f => { if (f && f.close) f.close(); });
+              
+              setTimeout(() => {
+                this.subTrozos.delete(subKey);
+                this.cargarSubTrozo(segundo, frameInicial, intento + 1);
+              }, 100 * intento);
+              
+              data.cargando = false;
+              resolve();
+              return;
+            }
+            
+            data.frames = frames;
+            data.cargando = false;
+            
+            const framesValidos = frames.filter(f => f).length;
+            console.log(`✅ Sub-trozo ${subKey}: ${framesValidos}/${fin - inicio} frames`);
+            
+            resolve();
+          })
+          .catch(err => {
+            console.error(`❌ Error en flush:`, err);
+            data.cargando = false;
+            
+            if (!decoderCerrado) {
+              try {
+                decoder.close();
+                decoderCerrado = true;
+                this.decodersActivos.delete(decoder); // ✅ Remover de activos
+              } catch (e) {}
+            }
+            
+            resolve();
+          });
+      } catch (error) {
+        console.error(`❌ Error configurando decoder:`, error);
+        data.cargando = false;
+        resolve();
+      }
+    });
+  }
+  
+  cleanup() {
+    this.subTrozos.forEach((data) => {
+      if (data.frames) {
+        data.frames.forEach(f => {
+          if (f && f.close) f.close();
+        });
+      }
+    });
+    this.subTrozos.clear();
+  }
+}
 
 
 const reproductorTrozos = new ReproductorTrozos(canvas_principal);
