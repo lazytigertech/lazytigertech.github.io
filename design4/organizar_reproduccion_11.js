@@ -1478,185 +1478,119 @@ const reproductorTrozos = new ReproductorTrozos(canvas_principal);
 
 
 /* ===========================
-   REPRODUCTOR CON VERIFICACIÓN
+   REPRODUCTOR CON DECODER PERSISTENTE
 =========================== */
 
 class ReproductorTrozos {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    this.segundos = new Map();
-    this.decodersActivos = new Map();
+    this.decoder = null;
+    this.segundoActualCargado = -1;
+    this.framesPorSegundo = new Map(); // Map<frameGlobal, VideoFrame temporal>
+    this.ultimoSegundo = -1;
   }
   
   async reproducirFrame(segundo, frameEnSegundo) {
-    this.precargarSiguiente(segundo); 
+    const frameGlobal = segundo * TARGET_FPS + frameEnSegundo;
     
-    const data = this.segundos.get(segundo);
+    // Si cambiamos de segundo, recargar
+    if (this.segundoActualCargado !== segundo) {
+      await this.cargarSegundoCompleto(segundo);
+    }
     
-    if (data && data.frames && data.frames[frameEnSegundo]) {
+    // Verificar si el frame está disponible
+    if (this.framesPorSegundo.has(frameGlobal)) {
+      const videoFrame = this.framesPorSegundo.get(frameGlobal);
+      
       try {
         this.ctx.drawImage(
-          data.frames[frameEnSegundo],
+          videoFrame,
           0, 0,
           this.canvas.width,
           this.canvas.height
         );
         return true;
       } catch (err) {
-        console.error("Error renderizando frame:", err);
+        console.error("Error renderizando:", err);
         return false;
       }
-    }
-    
-    if (!data || !data.cargando) {
-      this.cargarSegundo(segundo);
     }
     
     return false;
   }
   
-  precargarSiguiente(segundoActual) {
-    const siguiente = segundoActual + 1;
-    
-    if (trozos_guardados[siguiente] && !this.segundos.has(siguiente)) {
-      console.log(`🔄 Precargando segundo ${siguiente}...`);
-      this.cargarSegundo(siguiente);
-    }
-    
-    this.segundos.forEach((data, seg) => {
-      const margen = 2;
-      if (seg < segundoActual - margen) { 
-        console.log(`🗑️ Liberando segundo ${seg}`);
-        if (data.frames) {
-          data.frames.forEach(f => {
-            if (f && f.close) f.close();
-          });
-        }
-        this.segundos.delete(seg);
-      }
-    });
-  }
-  
-  async cargarSegundo(segundo) {
+  async cargarSegundoCompleto(segundo) {
     if (!trozos_guardados[segundo]) {
+      console.error(`Trozo ${segundo} no disponible`);
       return;
     }
     
-    if (!this.segundos.has(segundo)) {
-      this.segundos.set(segundo, { frames: [], cargando: true });
-    } else if (this.segundos.get(segundo).cargando) {
-      return;
+    // Limpiar frames del segundo anterior
+    if (this.ultimoSegundo >= 0 && this.ultimoSegundo !== segundo) {
+      const inicioAnterior = this.ultimoSegundo * TARGET_FPS;
+      const finAnterior = inicioAnterior + TARGET_FPS;
+      
+      for (let i = inicioAnterior; i < finAnterior; i++) {
+        if (this.framesPorSegundo.has(i)) {
+          const frame = this.framesPorSegundo.get(i);
+          try {
+            frame.close();
+          } catch (e) {}
+          this.framesPorSegundo.delete(i);
+        }
+      }
     }
-    
-    const data = this.segundos.get(segundo);
-    data.cargando = true;
     
     console.log(`🔄 Cargando segundo ${segundo}...`);
     
     const chunk_data = trozos_guardados[segundo];
     const encodedFrames = getChunks(chunk_data);
     
+    console.log(`📦 ${encodedFrames.length} frames codificados`);
+    
+    // Cerrar decoder anterior
+    if (this.decoder) {
+      try {
+        this.decoder.close();
+      } catch (e) {}
+    }
+    
     return new Promise((resolve, reject) => {
-      const frames = new Array(encodedFrames.length); // ✅ Pre-crear array
-      let framesCompletados = 0;
       let outputCount = 0;
+      const frameInicio = segundo * TARGET_FPS;
       
-      const decoder = new VideoDecoder({
+      this.decoder = new VideoDecoder({
         output: (videoFrame) => {
-          const frameIndex = outputCount++;
+          const frameGlobal = frameInicio + outputCount;
+          outputCount++;
           
-          try {
-            // ✅ Crear canvas y dibujar SINCRÓNICAMENTE
-            const offscreen = new OffscreenCanvas(
-              videoFrame.displayWidth,
-              videoFrame.displayHeight
-            );
-            const ctx = offscreen.getContext('2d');
-            
-            // Dibujar inmediatamente
-            ctx.drawImage(videoFrame, 0, 0);
-            
-            // Cerrar VideoFrame inmediatamente
-            videoFrame.close();
-            
-            // ✅ AHORA crear ImageBitmap del canvas
-            createImageBitmap(offscreen)
-              .then(bitmap => {
-                frames[frameIndex] = bitmap;
-                framesCompletados++;
-                console.log(`Frame ${frameIndex} creado (${framesCompletados}/${encodedFrames.length})`);
-                
-                // ✅ Verificar si ya tenemos todos
-                if (framesCompletados === encodedFrames.length) {
-                  finalizarCarga();
-                }
-              })
-              .catch(err => {
-                console.error(`❌ Error creando bitmap ${frameIndex}:`, err);
-                frames[frameIndex] = null;
-                framesCompletados++;
-                
-                // Aún así verificar si terminamos
-                if (framesCompletados === encodedFrames.length) {
-                  finalizarCarga();
-                }
-              });
-            
-          } catch (err) {
-            console.error(`Error procesando frame ${frameIndex}:`, err);
-            try {
-              videoFrame.close();
-            } catch (e) {}
-            framesCompletados++;
-            
-            if (framesCompletados === encodedFrames.length) {
-              finalizarCarga();
-            }
+          // ✅ GUARDAR el VideoFrame SIN convertirlo
+          this.framesPorSegundo.set(frameGlobal, videoFrame);
+          
+          console.log(`✓ Frame ${outputCount - 1} guardado como VideoFrame`);
+          
+          if (outputCount === encodedFrames.length) {
+            console.log(`✅ Segundo ${segundo} completo`);
+            this.segundoActualCargado = segundo;
+            this.ultimoSegundo = segundo;
+            resolve();
           }
         },
         error: (e) => {
           console.error("Decoder error:", e);
-          data.cargando = false;
           reject(e);
         }
       });
       
-      function finalizarCarga() {
-        // ✅ Verificar cuántos frames válidos tenemos
-        const framesValidos = frames.filter(f => f !== null && f !== undefined).length;
-        console.log(`✅ Segundo ${segundo}: ${framesValidos}/${encodedFrames.length} frames válidos`);
-        
-        // ✅ Listar frames faltantes
-        const faltantes = [];
-        for (let i = 0; i < frames.length; i++) {
-          if (!frames[i]) {
-            faltantes.push(i);
-          }
-        }
-        
-        if (faltantes.length > 0) {
-          console.error(`⚠️ Segundo ${segundo} - Frames faltantes:`, faltantes);
-        }
-        
-        data.frames = frames;
-        data.cargando = false;
-        
-        try {
-          decoder.close();
-        } catch (e) {}
-        
-        resolve();
-      }
-      
       try {
-        decoder.configure({ codec: "vp8" });
+        this.decoder.configure({ codec: "vp8" });
         
         let timestamp = 0;
         const frameDuration = 1e6 / TARGET_FPS;
         
         for (let i = 0; i < encodedFrames.length; i++) {
-          decoder.decode(new EncodedVideoChunk({
+          this.decoder.decode(new EncodedVideoChunk({
             type: i === 0 ? "key" : "delta",
             timestamp,
             data: encodedFrames[i],
@@ -1664,27 +1598,32 @@ class ReproductorTrozos {
           timestamp += frameDuration;
         }
         
-        // ✅ No esperar flush con then, dejar que los frames se completen solos
-        decoder.flush();
+        this.decoder.flush();
         
       } catch (error) {
-        console.error("Error configurando decoder:", error);
-        data.cargando = false;
+        console.error("Error:", error);
         reject(error);
       }
     });
   }
   
   cleanup() {
-    this.segundos.forEach((data, segundo) => {
-      if (data.frames) {
-        data.frames.forEach(f => {
-          if (f && f.close) f.close();
-        });
-      }
+    if (this.decoder) {
+      try {
+        this.decoder.close();
+      } catch (e) {}
+    }
+    
+    this.framesPorSegundo.forEach((frame, idx) => {
+      try {
+        frame.close();
+      } catch (e) {}
     });
-    this.segundos.clear();
+    
+    this.framesPorSegundo.clear();
+    this.segundoActualCargado = -1;
   }
 }
 
 const reproductorTrozos = new ReproductorTrozos(canvas_principal);
+
