@@ -243,7 +243,7 @@ function iniciarArrastreTouch(e, rect) {
         const t = moveEvent.touches[0];
         const dx = Math.abs(t.clientX - clientX);
         const dy = Math.abs(t.clientY - touch.clientY);
-        if (dx > 8 || dy > 8) cancelar();
+        if (dx > 30 || dy > 30) cancelar();
     };
 
     document.addEventListener('touchend', cancelar);
@@ -2030,5 +2030,6 @@ function finalizarRedimensionTouch(e) {
     document.removeEventListener('touchmove', redimensionarRectangulo);
     document.removeEventListener('touchend', finalizarRedimension);
     document.removeEventListener('touchcancel', finalizarRedimension);
+
 
 }
