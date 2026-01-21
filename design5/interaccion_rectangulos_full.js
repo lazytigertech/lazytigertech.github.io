@@ -190,7 +190,7 @@ function iniciarArrastreTouch(e, rect) {
     // Función de vibración segura
     const vibrarSeleccion = () => {
         if (navigator.vibrate) {
-            navigator.vibrate(20); 
+            navigator.vibrate(50); 
         } else { 
             rect.classList.add('haptic-fake');
             setTimeout(() => rect.classList.remove('haptic-fake'), 80);
@@ -199,8 +199,8 @@ function iniciarArrastreTouch(e, rect) {
 
     // ⏱ Long press timer
     touchTimer = setTimeout(() => {
-        if (!touchActivo) return; // si ya se soltó, no hacer nada
-        e.preventDefault?.(); // solo si es cancelable
+		if (e.cancelable) e.preventDefault();
+        if (!touchActivo) return; // si ya se soltó, no hacer nada 
 
         // ✅ vibración una sola vez
         vibrarSeleccion();
@@ -2033,3 +2033,4 @@ function finalizarRedimensionTouch(e) {
 
 
 }
+
